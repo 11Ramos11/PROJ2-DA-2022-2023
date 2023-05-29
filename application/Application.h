@@ -11,6 +11,7 @@
 #include <string>
 #include <stack>
 #include "../file-reader/FileReader.h"
+#include "../classes/timer/Timer.h"
 
 
 /** @brief Initializes and manages all the components of the application.
@@ -25,6 +26,9 @@ class Application {
 
     //! @brief Initialization of the fileReader.
     FileReader fileReader = FileReader();
+
+    //! @brief Initialization of the timer.
+    Timer timer = Timer();
 
     //! @brief Creates the initial menu options.
     enum States{

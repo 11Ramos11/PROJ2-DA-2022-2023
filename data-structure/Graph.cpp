@@ -32,10 +32,16 @@ std::vector<Vertex*> Graph::getVertexSet() const {
 
 Vertex * Graph::findVertex(int id) const {
 
-    for (Vertex* vertex: vertexSet)
-        if (vertex->getId() == id)
-            return vertex;
+    if (id >= vertexSet.size())
+        return nullptr;
 
+    if (vertexSet[id]->getId() == id)
+        return vertexSet[id];
+
+    for (Vertex* vertex: vertexSet){
+        if (vertex->getId() == id)
+            return vertex;  
+    }
     return nullptr;
 }
 
