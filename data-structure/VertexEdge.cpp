@@ -8,10 +8,10 @@
 
 /************************* Vertex  **************************/
 
-Vertex::Vertex(int id, std::shared_ptr<Station> station): id(id), station(station) {}
+Vertex::Vertex(int id): id(id) {}
 
-Edge * Vertex::addEdge(Vertex *d, double w, ServiceType service) {
-    auto newEdge = new Edge(this, d, w, service);
+Edge * Vertex::addEdge(Vertex *d, double w) {
+    auto newEdge = new Edge(this, d, w);
     adj.push_back(newEdge);
     d->incoming.push_back(newEdge);
     return newEdge;
@@ -52,10 +52,6 @@ int Vertex::getId() const {
     return this->id;
 }
 
-std::shared_ptr<Station> Vertex::getStation() const {
-    return this->station;
-}
-
 std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
@@ -91,8 +87,8 @@ void Vertex::setPath(Edge *path) {
 
 /********************** Edge  ****************************/
 
-Edge::Edge(Vertex *orig, Vertex *dest, double w, ServiceType service):
-    orig(orig), dest(dest), weight(w), service(service) {}
+Edge::Edge(Vertex *orig, Vertex *dest, double w):
+    orig(orig), dest(dest), weight(w) {}
 
 Vertex * Edge::getDest() const {
     return this->dest;

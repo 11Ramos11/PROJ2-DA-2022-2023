@@ -8,8 +8,9 @@
 
 void Application::start(){
 
-    state.push(WELCOME_MENU);
-    getMenu();
+    fileReader.read();
+//    state.push(WELCOME_MENU);
+//    getMenu();
 }
 
 void Application::welcomeMenu(){

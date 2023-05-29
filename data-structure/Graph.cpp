@@ -11,13 +11,13 @@ Graph::Graph(){}
 Graph::Graph(Graph *graph){
 
     for (Vertex* vertex: graph->getVertexSet())
-        this->addVertex(vertex->getId(), vertex->getStation());
+        this->addVertex(vertex->getId());
 
     for (Vertex* vertex: graph->getVertexSet()){
         for (Edge* edge: vertex->getAdj()){
             Vertex* origin = findVertex(edge->getOrig()->getId());
             Vertex* dest = findVertex(edge->getDest()->getId());
-            origin->addEdge(dest, edge->getWeight(), edge->getService());
+            origin->addEdge(dest, edge->getWeight());
         }
     }
 }
@@ -50,29 +50,29 @@ void Graph::dfs(int source){
     }
 }
 
-bool Graph::addVertex(const int &id, std::shared_ptr<Station> station) {
+bool Graph::addVertex(const int &id) {
     if (findVertex(id) != nullptr)
         return false;
-    vertexSet.push_back(new Vertex(id, station));
+    vertexSet.push_back(new Vertex(id));
     return true;
 }
 
-bool Graph::addEdge(const int &sourc, const int &dest, double w, ServiceType service) {
-    auto v1 = findVertex(sourc);
+bool Graph::addEdge(const int &source, const int &dest, double w) const {
+    auto v1 = findVertex(source);
     auto v2 = findVertex(dest);
     if (v1 == nullptr || v2 == nullptr)
         return false;
-    v1->addEdge(v2, w, service);
+    v1->addEdge(v2, w);
     return true;
 }
 
-bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double w, ServiceType service) {
-    auto v1 = findVertex(sourc);
+bool Graph::addBidirectionalEdge(const int &source, const int &dest, double w) {
+    auto v1 = findVertex(source);
     auto v2 = findVertex(dest);
     if (v1 == nullptr || v2 == nullptr)
         return false;
-    auto e1 = v1->addEdge(v2, w, service);
-    auto e2 = v2->addEdge(v1, w, service);
+    auto e1 = v1->addEdge(v2, w);
+    auto e2 = v2->addEdge(v1, w);
     e1->setReverse(e2);
     e2->setReverse(e1);
     return true;

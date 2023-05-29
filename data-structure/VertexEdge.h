@@ -36,9 +36,8 @@ public:
     /** @brief Creates a new Vertex.
      *
      * @param id of int type.
-     * @param station of std::shared_ptr<Station> type.
      */
-    Vertex(int id, std::shared_ptr<Station> station);
+    Vertex(int id);
 
     /** @brief Operator overloading.
      *
@@ -52,12 +51,6 @@ public:
      * @return Id of the vertex.
      */
     int getId() const;
-
-    /** @brief Represents the station.
-     *
-     * @return Station.
-     */
-    std::shared_ptr<Station> getStation() const;
 
     /** @brief Represents the adjacent edges.
      *
@@ -115,10 +108,9 @@ public:
      *
      * @param dest of Vertex* type.
      * @param w of double type.
-     * @param service of ServiceType type.
      * @return Edge.
      */
-    Edge * addEdge(Vertex *dest, double w, ServiceType service);
+    Edge * addEdge(Vertex *dest, double w);
 
     /** @brief Removes an outgoing edge from a vertex.
      *
@@ -134,9 +126,6 @@ protected:
 
     //! @brief Holds the id of the vertex.
     int id;
-
-    //! @brief Holds the station pointer.
-    std::shared_ptr<Station> station;
 
     //! @brief Holds the adjacent edges.
     std::vector<Edge *> adj;
@@ -171,9 +160,8 @@ public:
      * @param orig of Vertex* type.
      * @param dest of Vertex* type.
      * @param w of double type.
-     * @param service of ServiceType type.
      */
-    Edge(Vertex *orig, Vertex *dest, double w, ServiceType service);
+    Edge(Vertex *orig, Vertex *dest, double w);
 
     /** @brief Gets the destination of the edge.
      *

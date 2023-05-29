@@ -44,32 +44,29 @@ public:
     /** @brief Adds a vertex with a given content to a graph.
      *
      * @param id of const int type, by reference.
-     * @param station of std::shared_ptr<Station> type.
      * @return True if successful, and false if a vertex with that content already exists.
      */
-    bool addVertex(const int &id, std::shared_ptr<Station> station);
+    bool addVertex(const int &id);
 
     /** @brief Adds an edge to a graph, given the contents of the source and
      * destination vertices and the edge weight.
      *
-     * @param sourc of const int type, by reference.
+     * @param source of const int type, by reference.
      * @param dest of const int type, by reference.
      * @param w of double type.
-     * @param service of ServiceType type.
      * @return True if successful, and false if the source or destination vertex does not exist
      */
-    bool addEdge(const int &sourc, const int &dest, double w, ServiceType service);
+    bool addEdge(const int &source, const int &dest, double w) const;
 
     /** @brief Adds a bidirectional edge to a graph, given the contents of the source and
      * destination vertices and the edge weight.
      *
-     * @param sourc of const int type, by reference.
+     * @param source of const int type, by reference.
      * @param dest of const int type, by reference.
      * @param w of double type.
-     * @param service of ServiceType type.
      * @return True if successful, and false if the source or destination vertex does not exist
      */
-    bool addBidirectionalEdge(const int &sourc, const int &dest, double w, ServiceType service);
+    bool addBidirectionalEdge(const int &source, const int &dest, double w);
 
     /** @brief Represents the number of vertex of a graph.
      *
