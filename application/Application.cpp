@@ -5,11 +5,15 @@
  */
 
 #include "Application.h"
+#include "../classes/timer/Timer.h"
 
 void Application::start(){
 
 //    fileReader.read(TOY_GRAPH, "shipping.csv", graph);
-    fileReader.read(REAL_GRAPH, "graph3", graph);
+    Timer timer;
+    timer.start();
+    fileReader.read(REAL_GRAPH, "graph1", graph);
+    std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
 //    fileReader.read(EXTRA_GRAPH, "edges_900.csv", graph);
     std::cout << "---------------------------------------------------------------" << std::endl;
 //    state.push(WELCOME_MENU);
