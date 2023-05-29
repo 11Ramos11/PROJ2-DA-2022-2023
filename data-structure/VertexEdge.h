@@ -14,10 +14,7 @@
 #include <algorithm>
 #include <memory>
 #include "MutablePriorityQueue.h"
-#include "../classes/station/Station.h"
-
-//! Holds the ServiceType options.
-enum ServiceType {STANDARD = 2, ALFA_PENDULAR = 4, none = 0};
+#include "Coordinates.h"
 
 /** @brief Edge class to represent the edge from the graph.
  *
@@ -37,7 +34,7 @@ public:
      *
      * @param id of int type.
      */
-    Vertex(int id);
+    Vertex(int id, std::shared_ptr<Coordinates> coordinates);
 
     /** @brief Operator overloading.
      *
@@ -51,6 +48,12 @@ public:
      * @return Id of the vertex.
      */
     int getId() const;
+
+    /** @brief Represents the coordinates of the vertex.
+     *
+     * @return Coordinates of the vertex.
+     */
+    std::shared_ptr<Coordinates> getCoordinates() const;
 
     /** @brief Represents the adjacent edges.
      *
@@ -127,6 +130,9 @@ protected:
     //! @brief Holds the id of the vertex.
     int id;
 
+    //! @brief Holds the coordinates of the vertex.
+    std::shared_ptr<Coordinates> coordinates;
+
     //! @brief Holds the adjacent edges.
     std::vector<Edge *> adj;
 
@@ -193,12 +199,6 @@ public:
      */
     double getMinResidual();
 
-    /** @brief Gets the destination of the edge.
-     *
-     * @return Destination vertex.
-     */
-    ServiceType getService() const;
-
     /** @brief Sets the reverse edge.
      *
      * @param reverse of Edge* type.
@@ -227,9 +227,6 @@ protected:
 
     //! @brief Holds the weight of the edge.
     double weight;
-
-    //! @brief Holds the service of the edge.
-    ServiceType service;
 
     //! @brief Holds the original vertex.
     Vertex *orig;

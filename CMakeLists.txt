@@ -17,4 +17,4 @@ add_executable(PROJ2_DA_2022_2023
         data-structure/MutablePriorityQueue.h
         data-structure/VertexEdge.cpp
         data-structure/VertexEdge.h
-        main.cpp)
+        main.cpp data-structure/Coordinates.cpp data-structure/Coordinates.h)

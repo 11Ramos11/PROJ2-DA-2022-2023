@@ -7,37 +7,43 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <utility>
 #include "FileReader.h"
 
-FileReader::FileReader()= default;
+FileReader::FileReader() = default;
 
-int FileReader::read(graphType type, std::string fileName) {
+int FileReader::read(graphType type, const std::string& name, std::shared_ptr<Graph>& graph) {
+
+    this->graph.reset(new Graph());
 
     switch (type) {
         case TOY_GRAPH: {
-            if (readToyGraph(fileName))
+            if (readToyGraph(name))
                 return 1;
             break;
         }
         case REAL_GRAPH: {
-            if (readRealGraph(fileName))
+            if (readRealGraph(name))
                 return 1;
             break;
         }
         case EXTRA_GRAPH: {
-            if (readExtraGraph(fileName))
+            if (readExtraGraph(name))
                 return 1;
             break;
         }
     }
+
+    graph = this->graph;
+
     return 0;
 }
 
-int FileReader::readToyGraph(std::string fileName){
+int FileReader::readToyGraph(const std::string& fileName){
 
-    Graph graph;
+    std::string path = "../data/toy-graphs/" + fileName;
 
-    std::ifstream file(fileName);
+    std::ifstream file(path);
 
     if (file.fail()) {
         std::cout << "Error opening file " << fileName << std::endl;
@@ -48,110 +54,108 @@ int FileReader::readToyGraph(std::string fileName){
 
     std::getline(file, line);
 
-    std::string origin, destination, distance;
-
-    int id = 1;
+    std::string originID, destinationID, distance;
 
     while (std::getline(file, line)) {
         std::stringstream ss(line);
-        std::getline(ss, origin, ',');
-        std::getline(ss, destination, ',');
+        std::getline(ss, originID, ',');
+        std::getline(ss, destinationID, ',');
         std::getline(ss, distance);
 
-        graph.addVertex(origin);
-        graph.addVertex(destination);
-        graph.addEdge(origin, destination, std::stoi(distance));
+        graph->addVertex(std::stoi(originID), nullptr);
+        graph->addVertex(std::stoi(destinationID), nullptr);
+        graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), std::stoi(distance));
     }
     return 0;
 }
 
-int FileReader::readRealGraph(std::string fileName){
 
+int FileReader::readRealGraph(const std::string& folderName){
 
+    std::string path = "../data/real-world-graphs/" + folderName;
+
+    std::string nodesPath = path + "/nodes.csv";
+    std::string edgesPath = path + "/edges.csv";
+
+    std::ifstream nodesFile(nodesPath);
+
+    if (nodesFile.fail()) {
+        std::cout << "Error opening file " << nodesPath << std::endl;
+        return 1;
+    }
+
+    std::string line;
+
+    std::getline(nodesFile, line);
+
+    std::string id, longitude, latitude;
+
+    while (std::getline(nodesFile, line)) {
+        std::stringstream ss(line);
+        std::getline(ss, id, ',');
+        std::getline(ss, longitude, ',');
+        std::getline(ss, latitude);
+
+        Coordinates coordinates = Coordinates(std::stod(longitude), std::stod(latitude));
+
+        std::shared_ptr<Coordinates> coordinatesPTR = std::make_shared<Coordinates>(coordinates);
+        graph->addVertex(std::stoi(id), coordinatesPTR);
+    }
+
+    std::ifstream edgesFile(edgesPath);
+
+    if (edgesFile.fail()) {
+        std::cout << "Error opening file " << edgesPath << std::endl;
+        return 1;
+    }
+
+    std::getline(edgesFile, line);
+
+    std::string originID, destinationID, distance;
+
+    while (std::getline(edgesFile, line)) {
+        std::stringstream ss(line);
+        std::getline(ss, originID, ',');
+        std::getline(ss, destinationID, ',');
+        std::getline(ss, distance);
+
+        graph->addBidirectionalEdge(
+            std::stoi(originID),
+            std::stoi(destinationID),
+            std::stoi(distance)
+        );
+    }
+
+    return 0;
 }
 
-int FileReader::readExtraGraph(std::string fileName){}
-//int FileReader::readStations(std::unordered_map<std::string, std::shared_ptr<Station>> &stations, Graph &railwayNetwork) {
-//
-//    std::ifstream stationsFile(stationsFileName);
-//
-//    if (stationsFile.fail())
-//        return -1;
-//
-//    std::string entry;
-//
-//    getline(stationsFile, entry);
-//
-//    std::string name, district, municipality, township, line;
-//
-//    int id = 1;
-//
-//    do {
-//        getline(stationsFile, name, ',');
-//        if (name.empty()) break;
-//        getline(stationsFile, district, ',');
-//        getline(stationsFile, municipality, ',');
-//        getline(stationsFile, township, ',');
-//        getline(stationsFile, line);
-//
-//        std::shared_ptr<Station> stationPTR = std::make_shared<Station>(id, name, district, municipality, township, line);
-//        auto insertion = stations.insert(std::make_pair(name, stationPTR));
-//        if(insertion.second) {
-//            railwayNetwork.addVertex(id, stationPTR);
-//            id++;
-//        }
-//
-//    } while (true);
-//
-//    return 0;
-//}
-//
-//int FileReader::readNetwork(std::unordered_map<std::string, std::shared_ptr<Station>>& stations, Graph &railwayNetwork) {
-//
-//    std::ifstream networkFile(networkFileName);
-//
-//    if (networkFile.fail())
-//        return -1;
-//
-//    std::string entry;
-//
-//    getline(networkFile, entry);
-//
-//    std::string stationA, stationB, capacity, service;
-//
-//    do {
-//        getline(networkFile, stationA, ',');
-//        if (stationA.empty()) break;
-//        getline(networkFile, stationB, ',');
-//        getline(networkFile, capacity, ',');
-//        getline(networkFile, service);
-//
-//        ServiceType serviceType;
-//
-//       if (service == "STANDARD")
-//            serviceType = STANDARD;
-//       else if (service == "ALFA PENDULAR")
-//            serviceType = ALFA_PENDULAR;
-//       else
-//           continue;
-//
-//       double capacityDouble = stod(capacity);
-//
-//       railwayNetwork.addBidirectionalEdge(
-//                stations.at(stationA)->getId(), stations.at(stationB)->getId(),
-//                capacityDouble, serviceType);
-//
-//    } while (true);
-//
-//    return 0;
-//}
-//
-//void FileReader::reset() {
-//    stationsFileName = "../resources/stations.csv";
-//    networkFileName = "../resources/network.csv";
-//}
-//
-//void FileReader::setFiles(std::string stationsFileName, std::string networkFileName) {
-//    this->stationsFileName = "../resources/" + stationsFileName;
-//    this->networkFileName = "../resources/" + networkFileName;
-//}
+int FileReader::readExtraGraph(const std::string& fileName){
+
+    std::string path = "../data/extra-fully-connected-graphs/" + fileName;
+
+    std::ifstream file(path);
+
+    if (file.fail()) {
+        std::cout << "Error opening file " << fileName << std::endl;
+        return 1;
+    }
+
+    std::string line;
+
+    std::getline(file, line);
+
+    std::string originID, destinationID, distance;
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::getline(ss, originID, ',');
+        std::getline(ss, destinationID, ',');
+        std::getline(ss, distance);
+
+        graph->addVertex(std::stoi(originID), nullptr);
+        graph->addVertex(std::stoi(destinationID), nullptr);
+        graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), std::stoi(distance));
+    }
+    return 0;
+}
+

@@ -44,9 +44,10 @@ public:
     /** @brief Adds a vertex with a given content to a graph.
      *
      * @param id of const int type, by reference.
+     * @param coordinates of std::shared_ptr<Coordinates> type.
      * @return True if successful, and false if a vertex with that content already exists.
      */
-    bool addVertex(const int &id);
+    bool addVertex(const int &id, std::shared_ptr<Coordinates> coordinates);
 
     /** @brief Adds an edge to a graph, given the contents of the source and
      * destination vertices and the edge weight.

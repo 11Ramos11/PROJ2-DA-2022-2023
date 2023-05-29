@@ -8,9 +8,9 @@
 
 /************************* Vertex  **************************/
 
-Vertex::Vertex(int id): id(id) {}
+Vertex::Vertex(int id, std::shared_ptr<Coordinates> coordinates): id(id), coordinates(coordinates) {}
 
-Edge * Vertex::addEdge(Vertex *d, double w) {
+Edge* Vertex::addEdge(Vertex *d, double w) {
     auto newEdge = new Edge(this, d, w);
     adj.push_back(newEdge);
     d->incoming.push_back(newEdge);
@@ -50,6 +50,10 @@ bool Vertex::operator<(Vertex & vertex) const {
 
 int Vertex::getId() const {
     return this->id;
+}
+
+std::shared_ptr<Coordinates> Vertex::getCoordinates() const {
+    return this->coordinates;
 }
 
 std::vector<Edge*> Vertex::getAdj() const {
@@ -104,10 +108,6 @@ Vertex * Edge::getOrig() const {
 
 double Edge::getFlow() const {
     return flow;
-}
-
-ServiceType Edge::getService() const {
-    return service;
 }
 
 void Edge::setReverse(Edge *reverse) {

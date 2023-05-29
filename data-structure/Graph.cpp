@@ -11,7 +11,7 @@ Graph::Graph(){}
 Graph::Graph(Graph *graph){
 
     for (Vertex* vertex: graph->getVertexSet())
-        this->addVertex(vertex->getId());
+        this->addVertex(vertex->getId(), vertex->getCoordinates());
 
     for (Vertex* vertex: graph->getVertexSet()){
         for (Edge* edge: vertex->getAdj()){
@@ -26,7 +26,7 @@ int Graph::getNumVertex() const {
     return vertexSet.size();
 }
 
-std::vector<Vertex *> Graph::getVertexSet() const {
+std::vector<Vertex*> Graph::getVertexSet() const {
     return vertexSet;
 }
 
@@ -50,10 +50,10 @@ void Graph::dfs(int source){
     }
 }
 
-bool Graph::addVertex(const int &id) {
+bool Graph::addVertex(const int &id, std::shared_ptr<Coordinates> coordinates) {
     if (findVertex(id) != nullptr)
         return false;
-    vertexSet.push_back(new Vertex(id));
+    vertexSet.push_back(new Vertex(id, coordinates));
     return true;
 }
 
