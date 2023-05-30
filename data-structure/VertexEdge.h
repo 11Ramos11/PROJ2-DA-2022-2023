@@ -199,6 +199,12 @@ public:
      */
     double getMinResidual();
 
+    /** @brief Gets the reverse edge.
+     *
+     * @return Reverse edge.
+     */
+    Edge * getReverse() const;
+
     /** @brief Sets the reverse edge.
      *
      * @param reverse of Edge* type.

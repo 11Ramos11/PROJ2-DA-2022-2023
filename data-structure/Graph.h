@@ -17,6 +17,18 @@
 
 #include "VertexEdge.h"
 
+// hash function for unordered_map<std::pair<int, int>, Edge*>
+
+/** @brief Hash function for unordered_map<std::pair<int, int>, Edge*>.
+ *
+ * @param p of std::pair<int, int> type.
+ * @return Hash value.
+ */
+struct pair_hash {
+    template <class T1, class T2>
+    std::size_t operator () (const std::pair<T1, T2> &p) const;
+};
+
 /** @brief Graph class to represent implementations that uses a graph directly.
  *
  */
@@ -58,7 +70,7 @@ public:
      * @param w of double type.
      * @return True if successful, and false if the source or destination vertex does not exist
      */
-    bool addEdge(const int &source, const int &dest, double w) const;
+    bool addEdge(const int &source, const int &dest, double w);
 
     /** @brief Adds a bidirectional edge to a graph, given the contents of the source and
      * destination vertices and the edge weight.
@@ -69,6 +81,8 @@ public:
      * @return True if successful, and false if the source or destination vertex does not exist
      */
     bool addBidirectionalEdge(const int &source, const int &dest, double w);
+
+    Edge* getEdge(int source, int dest) const;
 
     /** @brief Represents the number of vertex of a graph.
      *
@@ -103,6 +117,8 @@ protected:
 
     //! @brief Maps the index of vertex, in the vertexSet, to its id.
     std::unordered_map<unsigned int, unsigned int> indexMap;
+
+    std::unordered_map<std::pair<unsigned int, unsigned int>, Edge*, pair_hash> edges;
 };
 
 #endif /* DA_TP_CLASSES_GRAPH */

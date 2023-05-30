@@ -6,6 +6,18 @@
 
 #include "Graph.h"
 
+template<class T1, class T2>
+std::size_t pair_hash::operator()(const std::pair<T1, T2> &p) const  {
+    auto h1 = std::hash<T1>{}(p.first);
+    auto h2 = std::hash<T2>{}(p.second);
+
+    std::size_t seed = 0;
+    seed ^= h1 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    seed ^= h2 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+
+    return seed;
+}
+
 Graph::Graph(){}
 
 Graph::Graph(Graph *graph){
@@ -70,12 +82,13 @@ bool Graph::addVertex(const int &id, std::shared_ptr<Coordinates> coordinates) {
     return true;
 }
 
-bool Graph::addEdge(const int &source, const int &dest, double w) const {
+bool Graph::addEdge(const int &source, const int &dest, double w)  {
     auto v1 = findVertex(source);
     auto v2 = findVertex(dest);
     if (v1 == nullptr || v2 == nullptr)
         return false;
-    v1->addEdge(v2, w);
+    auto e1 = v1->addEdge(v2, w);
+    edges.emplace(std::make_pair(source, dest), e1);
     return true;
 }
 
@@ -86,6 +99,8 @@ bool Graph::addBidirectionalEdge(const int &source, const int &dest, double w) {
         return false;
     auto e1 = v1->addEdge(v2, w);
     auto e2 = v2->addEdge(v1, w);
+    edges.emplace(std::make_pair(source, dest), e1);
+    edges.emplace(std::make_pair(dest, source), e2);
     e1->setReverse(e2);
     e2->setReverse(e1);
     return true;
@@ -112,4 +127,14 @@ void Graph::removeVertex(int id) {
         if (it->second > indexMap.find(id)->second)
             it->second--;
     }
+}
+
+Edge *Graph::getEdge(int source, int dest) const {
+
+    auto it = edges.find(std::make_pair(source, dest));
+
+    if (it == edges.end())
+        return nullptr;
+
+    return it->second;
 }

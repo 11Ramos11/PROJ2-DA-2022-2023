@@ -8,6 +8,7 @@
 #include <iostream>
 #include <sstream>
 #include <utility>
+#include <cmath>
 #include "FileReader.h"
 
 FileReader::FileReader() = default;
@@ -64,7 +65,8 @@ int FileReader::readToyGraph(const std::string& fileName){
 
         graph->addVertex(std::stoi(originID), nullptr);
         graph->addVertex(std::stoi(destinationID), nullptr);
-        graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), std::stod(distance));
+        double dist = std::stod(distance);
+        graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), dist);
     }
     return 0;
 }

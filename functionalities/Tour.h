@@ -10,14 +10,21 @@
 
 class Tour {
 
+    std::vector<Edge*> tourEdges;
 
-    std::vector<Vertex*> tour;
+    std::vector<Vertex*> tourVertexes;
 
     double cost;
 
 public:
 
     void setTour(std::vector<Edge*> tourEdges);
+
+    std::vector<Vertex*> getVertexes();
+
+    std::vector<Edge*> getEdges();
+
+    double getCost();
 
     void print();
 };

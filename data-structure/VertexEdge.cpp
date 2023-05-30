@@ -125,3 +125,7 @@ double Edge::getMinResidual() {
 void Edge::setMinResidual(int minResidual){
     this->maxResidual = minResidual;
 }
+
+Edge *Edge::getReverse() const {
+    return this->reverse;
+}

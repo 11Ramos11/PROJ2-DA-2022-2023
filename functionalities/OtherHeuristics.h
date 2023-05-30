@@ -11,8 +11,16 @@
 
 class OtherHeuristics {
 
+    std::shared_ptr<Graph> graph;
 public:
-    int nearestNeighbours(std::shared_ptr<Graph> graph, Tour &tour);
+
+    OtherHeuristics(std::shared_ptr<Graph> graph);
+
+    int nearestNeighbours(Tour &tour);
+
+    int twoOpt(Tour &tour);
+
+    Tour twoOptSwap(Tour &tour, int i, int j);
 };
 
 
