@@ -12,7 +12,7 @@
 
 FileReader::FileReader() = default;
 
-int FileReader::read(graphType type, const std::string& name, std::shared_ptr<Graph>& graph) {
+int FileReader::read(graphType type, const std::string &name, std::shared_ptr<Graph> &graph) {
 
     this->graph.reset(new Graph());
 
@@ -39,7 +39,7 @@ int FileReader::read(graphType type, const std::string& name, std::shared_ptr<Gr
     return 0;
 }
 
-int FileReader::readToyGraph(const std::string& fileName){
+int FileReader::readToyGraph(const std::string &fileName) {
 
     std::string path = "../data/toy-graphs/" + fileName;
 
@@ -64,13 +64,13 @@ int FileReader::readToyGraph(const std::string& fileName){
 
         graph->addVertex(std::stoi(originID), nullptr);
         graph->addVertex(std::stoi(destinationID), nullptr);
-        graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), std::stoi(distance));
+        graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), std::stod(distance));
     }
     return 0;
 }
 
 
-int FileReader::readRealGraph(const std::string& folderName){
+int FileReader::readRealGraph(const std::string &folderName) {
 
     std::string path = "../data/real-world-graphs/" + folderName;
 
@@ -120,16 +120,16 @@ int FileReader::readRealGraph(const std::string& folderName){
         std::getline(ss, distance);
 
         graph->addBidirectionalEdge(
-            std::stoi(originID),
-            std::stoi(destinationID),
-            std::stoi(distance)
+                std::stoi(originID),
+                std::stoi(destinationID),
+                std::stoi(distance)
         );
     }
 
     return 0;
 }
 
-int FileReader::readExtraGraph(const std::string& fileName){
+int FileReader::readExtraGraph(const std::string &fileName) {
 
     std::string path = "../data/extra-fully-connected-graphs/" + fileName;
 

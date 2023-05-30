@@ -31,13 +31,13 @@ public:
      */
     FileReader();
 
-    int read(graphType type, const std::string& name, std::shared_ptr<Graph>& graph);
+    int read(graphType type, const std::string &name, std::shared_ptr<Graph> &graph);
 
-    int readToyGraph(const std::string& fileName);
+    int readToyGraph(const std::string &fileName);
 
-    int readRealGraph(const std::string& folderName);
+    int readRealGraph(const std::string &folderName);
 
-    int readExtraGraph(const std::string& fileName);
+    int readExtraGraph(const std::string &fileName);
 };
 
 #endif //PROJ1_DA_2022_2023_FILEREADER_H

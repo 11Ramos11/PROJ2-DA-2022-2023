@@ -6,17 +6,17 @@
 
 #include "Graph.h"
 
-Graph::Graph(){}
+Graph::Graph() {}
 
-Graph::Graph(Graph *graph){
+Graph::Graph(Graph *graph) {
 
-    for (Vertex* vertex: graph->getVertexSet())
+    for (Vertex *vertex: graph->getVertexSet())
         this->addVertex(vertex->getId(), vertex->getCoordinates());
 
-    for (Vertex* vertex: graph->getVertexSet()){
-        for (Edge* edge: vertex->getAdj()){
-            Vertex* origin = findVertex(edge->getOrig()->getId());
-            Vertex* dest = findVertex(edge->getDest()->getId());
+    for (Vertex *vertex: graph->getVertexSet()) {
+        for (Edge *edge: vertex->getAdj()) {
+            Vertex *origin = findVertex(edge->getOrig()->getId());
+            Vertex *dest = findVertex(edge->getDest()->getId());
             origin->addEdge(dest, edge->getWeight());
         }
     }
@@ -26,11 +26,11 @@ int Graph::getNumVertex() const {
     return vertexSet.size();
 }
 
-std::vector<Vertex*> Graph::getVertexSet() const {
+std::vector<Vertex *> Graph::getVertexSet() const {
     return vertexSet;
 }
 
-Vertex * Graph::findVertex(int id) const {
+Vertex *Graph::findVertex(int id) const {
 
     if (id >= vertexSet.size())
         return nullptr;
@@ -38,19 +38,19 @@ Vertex * Graph::findVertex(int id) const {
     if (vertexSet[id]->getId() == id)
         return vertexSet[id];
 
-    for (Vertex* vertex: vertexSet){
+    for (Vertex *vertex: vertexSet) {
         if (vertex->getId() == id)
-            return vertex;  
+            return vertex;
     }
     return nullptr;
 }
 
-void Graph::dfs(int source){
+void Graph::dfs(int source) {
 
-    Vertex* vertex = findVertex(source);
+    Vertex *vertex = findVertex(source);
     vertex->setVisited(true);
 
-    for (Edge* edge: vertex->getAdj()){
+    for (Edge *edge: vertex->getAdj()) {
         if (!edge->getDest()->isVisited())
             dfs(edge->getDest()->getId());
     }
@@ -87,7 +87,7 @@ bool Graph::addBidirectionalEdge(const int &source, const int &dest, double w) {
 void Graph::removeVertex(int id) {
     auto it = vertexSet.begin();
 
-    while (it != vertexSet.end()){
+    while (it != vertexSet.end()) {
 
         if ((*it)->getId() == id) {
             vertexSet.erase(it);

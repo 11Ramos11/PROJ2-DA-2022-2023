@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.24)
 project(PROJ2_DA_2022_2023)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -17,4 +17,4 @@ add_executable(PROJ2_DA_2022_2023
         data-structure/MutablePriorityQueue.h
         data-structure/VertexEdge.cpp
         data-structure/VertexEdge.h
-        main.cpp data-structure/Coordinates.cpp data-structure/Coordinates.h classes/timer/Timer.cpp classes/timer/Timer.h)
+        main.cpp data-structure/Coordinates.cpp data-structure/Coordinates.h classes/timer/Timer.cpp classes/timer/Timer.h classes/backtraking/Backtraking.cpp classes/backtraking/Backtraking.h)

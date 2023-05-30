@@ -39,7 +39,7 @@ public:
      * @param id of int type.
      * @return Corresponding vertex.
      */
-    Vertex * findVertex(int id) const;
+    Vertex *findVertex(int id) const;
 
     /** @brief Adds a vertex with a given content to a graph.
      *
