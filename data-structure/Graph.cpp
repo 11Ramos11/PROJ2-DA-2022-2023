@@ -40,7 +40,7 @@ Vertex * Graph::findVertex(int id) const {
 
     for (Vertex* vertex: vertexSet){
         if (vertex->getId() == id)
-            return vertex;  
+            return vertex;
     }
     return nullptr;
 }

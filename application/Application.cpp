@@ -10,7 +10,12 @@ void Application::start(){
 
 //    fileReader.read(TOY_GRAPH, "shipping.csv", graph);
     timer.start();
-    fileReader.read(REAL_GRAPH, "graph3", graph);
+    fileReader.read(TOY_GRAPH, "shipping.csv", graph);
+
+    for (Vertex* vertex: graph->getVertexSet()){
+        std::cout << "Id: " << vertex->getId() << std::endl;
+    }
+
     std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
 //    fileReader.read(EXTRA_GRAPH, "edges_900.csv", graph);
     std::cout << "---------------------------------------------------------------" << std::endl;

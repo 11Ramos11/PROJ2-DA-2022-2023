@@ -56,14 +56,24 @@ int FileReader::readToyGraph(const std::string& fileName){
 
     std::string originID, destinationID, distance;
 
+    while(std::getline(file, line)){
+        std::stringstream ss(line);
+
+        std::getline(ss, originID, ',');
+
+        graph->addVertex(std::stoi(originID), nullptr);
+    }
+
+    file.clear();
+    file.seekg(0, std::ios::beg);
+    std::getline(file, line);
+
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::getline(ss, originID, ',');
         std::getline(ss, destinationID, ',');
         std::getline(ss, distance);
 
-        graph->addVertex(std::stoi(originID), nullptr);
-        graph->addVertex(std::stoi(destinationID), nullptr);
         graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), std::stoi(distance));
     }
     return 0;
@@ -145,6 +155,18 @@ int FileReader::readExtraGraph(const std::string& fileName){
     std::getline(file, line);
 
     std::string originID, destinationID, distance;
+
+    while(std::getline(file, line)){
+        std::stringstream ss(line);
+
+        std::getline(ss, originID, ',');
+
+        graph->addVertex(std::stoi(originID), nullptr);
+    }
+
+    file.clear();
+    file.seekg(0, std::ios::beg);
+    std::getline(file, line);
 
     while (std::getline(file, line)) {
         std::stringstream ss(line);
