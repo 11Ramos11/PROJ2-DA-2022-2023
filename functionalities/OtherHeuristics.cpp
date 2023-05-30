@@ -4,10 +4,14 @@
 
 #include "OtherHeuristics.h"
 
-int OtherHeuristics::nearestNeighbour(std::shared_ptr<Graph> graph, Tour &tour){
+int OtherHeuristics::nearestNeighbours(std::shared_ptr<Graph> graph, Tour &tour){
 
     if (graph->getNumVertex() == 0)
         return 1;
+
+    for (Vertex* vertex: graph->getVertexSet()) {
+        vertex->setVisited(false);
+    }
 
     std::vector<Vertex*> vertexSet = graph->getVertexSet();
 
@@ -30,7 +34,6 @@ int OtherHeuristics::nearestNeighbour(std::shared_ptr<Graph> graph, Tour &tour){
                 } else if (edge->getWeight() < minEdge->getWeight()) {
                     minEdge = edge;
                 }
-                continue;
             }
         }
 
