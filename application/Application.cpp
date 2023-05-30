@@ -10,7 +10,7 @@ void Application::start() {
 
 //    fileReader.read(TOY_GRAPH, "shipping.csv", graph);
     timer.start();
-    fileReader.read(TOY_GRAPH, "shipping.csv", graph);
+    fileReader.read(TOY_GRAPH, "stadiums.csv", graph);
 
 //    std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
 

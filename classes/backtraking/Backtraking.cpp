@@ -25,15 +25,13 @@ bool exitsPath(Vertex *vertex1, Vertex *vertex2) {
     return false;
 }
 
-void tspCicles(std::vector<Vertex *> &vertices, unsigned int n, unsigned int curIndex, double curDist,
+void Backtraking::tspCicles(std::vector<Vertex *> &vertices, unsigned int n, unsigned int curIndex, double curDist,
                std::vector<unsigned int> &curPath, double &minDist, std::vector<unsigned int> &path) {
     bool exitsPathbetweenVertex;
     if (curIndex == n) {
-        exitsPathbetweenVertex = exitsPath(vertices[curPath[n - 1]], vertices[curPath[0]]);
-        if (curDist >= 82.6 && curDist <= 82.8)
-            std::cout << vertices[curPath[n-1]]->getId() << " - " << vertices[curPath[0]] << std::endl;
+        exitsPathbetweenVertex = exitsPath(vertices[graph->findVertex(curPath[n - 1])->getId()], vertices[graph->findVertex(curPath[0])->getId()]);
         if (exitsPathbetweenVertex) {
-            curDist += getEdgeWeightBetween(vertices[curPath[n - 1]], vertices[curPath[0]]);
+            curDist += getEdgeWeightBetween(vertices[graph->findVertex(curPath[n - 1])->getId()], vertices[curPath[0]]);
             if (curDist < minDist) {
                 minDist = curDist;
                 path = curPath;
@@ -45,7 +43,7 @@ void tspCicles(std::vector<Vertex *> &vertices, unsigned int n, unsigned int cur
     for (unsigned int i = 1; i < n; i++) {
         exitsPathbetweenVertex = exitsPath(vertices[curPath[curIndex - 1]], vertices[i]);
         if (exitsPathbetweenVertex)
-            if (curDist + getEdgeWeightBetween(vertices[curPath[curIndex - 1]], vertices[i]) < minDist) {
+            if (curDist + getEdgeWeightBetween(vertices[graph->findVertex(curPath[curIndex - 1])->getId()], vertices[graph->findVertex(i)->getId()]) < minDist) {
                 bool isNewVertex = true;
                 for (unsigned int j = 1; j < curIndex; j++) {
                     if (curPath[j] == i) {
@@ -55,15 +53,11 @@ void tspCicles(std::vector<Vertex *> &vertices, unsigned int n, unsigned int cur
                 }
                 if (isNewVertex) {
                     curPath[curIndex] = i;
-                    double result = getEdgeWeightBetween(vertices[curPath[curIndex - 1]], vertices[curPath[curIndex]]);
+                    double result = getEdgeWeightBetween(vertices[graph->findVertex(curPath[curIndex - 1])->getId()], vertices[graph->findVertex(curPath[curIndex])->getId()]);
                     tspCicles(vertices, n, curIndex + 1, curDist + result, curPath, minDist, path);
                 }
             }
     }
-}
-
-bool sort(Vertex* v1, Vertex *v2) {
-    return v1->getId() < v2->getId();
 }
 
 
@@ -72,17 +66,13 @@ std::pair<double, std::vector<Vertex *>> Backtraking::tspBacktraking() {
     double minDist = std::numeric_limits<double>::max();
 
     std::vector<Vertex *> vertices = graph->getVertexSet();
-    std::sort(vertices.begin(), vertices.end(), sort);
-    vertices.pop_back();
-    for (auto v : vertices)
-        std::cout << v->getId() << std::endl;
     unsigned int n = vertices.size();
-    std::vector<unsigned int> curPath(n-1);
+    std::vector<unsigned int> curPath(n);
     curPath[0] = vertices[0]->getId();
 
-    std::vector<unsigned int> path(n-1);
+    std::vector<unsigned int> path(n);
 
-    tspCicles(vertices, 13, 1, 0, curPath, minDist, path);
+    tspCicles(vertices, n, 1, 0, curPath, minDist, path);
 
     for (unsigned int id: path) {
         for (Vertex *v: vertices) {

@@ -13,6 +13,9 @@ class Backtraking {
 private:
     std::shared_ptr<Graph> graph;
 
+    void tspCicles(std::vector<Vertex *> &vertices, unsigned int n, unsigned int curIndex, double curDist,
+                                std::vector<unsigned int> &curPath, double &minDist, std::vector<unsigned int> &path);
+
 public:
     Backtraking(std::shared_ptr<Graph> &graph);
 
