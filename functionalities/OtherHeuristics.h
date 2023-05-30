@@ -7,10 +7,12 @@
 
 
 #include "Graph.h"
+#include "Tour.h"
 
 class OtherHeuristics {
 
-    void NearestNeighbour(std::shared_ptr<Graph> graph);
+public:
+    int nearestNeighbour(std::shared_ptr<Graph> graph, Tour &tour);
 };
 
 

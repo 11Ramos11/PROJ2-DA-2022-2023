@@ -4,20 +4,20 @@
 
 #include "OtherHeuristics.h"
 
-void OtherHeuristics::NearestNeighbour(std::shared_ptr<Graph> graph){
+int OtherHeuristics::nearestNeighbour(std::shared_ptr<Graph> graph, Tour &tour){
 
     if (graph->getNumVertex() == 0)
-        return;
+        return 1;
 
     std::vector<Vertex*> vertexSet = graph->getVertexSet();
 
-    Vertex* currentVertex = vertexSet[0];
+    std::vector<Edge*> tourEdges;
 
-    std::vector<Vertex*> tour;
+    Vertex* origin = vertexSet[0];
+
+    Vertex* currentVertex = origin;
 
     while (true){
-
-        tour.push_back(currentVertex);
 
         currentVertex->setVisited(true);
 
@@ -34,11 +34,15 @@ void OtherHeuristics::NearestNeighbour(std::shared_ptr<Graph> graph){
             }
         }
 
-        if (minEdge == nullptr)
+        if (minEdge == nullptr) {
             break;
+        }
+        tourEdges.push_back(minEdge);
 
         currentVertex = minEdge->getDest();
     }
 
+    tour.setTour(tourEdges);
 
+    return 0;
 }
