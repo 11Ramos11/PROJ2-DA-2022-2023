@@ -27,21 +27,27 @@ int Graph::getNumVertex() const {
 }
 
 std::vector<Vertex*> Graph::getVertexSet() const {
+
     return vertexSet;
 }
 
 Vertex * Graph::findVertex(int id) const {
 
-    if (id >= vertexSet.size())
+    auto it = indexMap.find(id);
+
+    if (it == indexMap.end())
         return nullptr;
 
-    if (vertexSet[id]->getId() == id)
-        return vertexSet[id];
+    unsigned int index = it->second;
+
+    if (index < vertexSet.size() && vertexSet[index]->getId() == id)
+        return vertexSet[index];
 
     for (Vertex* vertex: vertexSet){
         if (vertex->getId() == id)
             return vertex;
     }
+
     return nullptr;
 }
 
@@ -59,6 +65,7 @@ void Graph::dfs(int source){
 bool Graph::addVertex(const int &id, std::shared_ptr<Coordinates> coordinates) {
     if (findVertex(id) != nullptr)
         return false;
+    indexMap.insert(std::pair<int, int>(id, vertexSet.size()));
     vertexSet.push_back(new Vertex(id, coordinates));
     return true;
 }
@@ -94,5 +101,15 @@ void Graph::removeVertex(int id) {
             break;
         }
         it++;
+    }
+
+    for (Vertex* vertex: vertexSet)
+        vertex->removeEdge(id);
+
+    indexMap.erase(id);
+
+    for (auto it = indexMap.begin(); it != indexMap.end(); it++){
+        if (it->second > indexMap.find(id)->second)
+            it->second--;
     }
 }
