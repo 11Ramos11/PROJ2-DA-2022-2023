@@ -154,7 +154,7 @@ int FileReader::readExtraGraph(const std::string &fileName) {
 
         graph->addVertex(std::stoi(originID), nullptr);
         graph->addVertex(std::stoi(destinationID), nullptr);
-        graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), std::stoi(distance));
+        graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), std::stod(distance));
     }
     return 0;
 }

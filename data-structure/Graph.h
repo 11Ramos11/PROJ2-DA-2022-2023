@@ -12,6 +12,7 @@
 #include <queue>
 #include <limits>
 #include <algorithm>
+#include <unordered_map>
 #include "MutablePriorityQueue.h"
 
 #include "VertexEdge.h"
@@ -99,6 +100,9 @@ protected:
 
     //! @brief Holds the vertexSet.
     std::vector<Vertex *> vertexSet;
+
+    //! @brief Maps the index of vertex, in the vertexSet, to its id.
+    std::unordered_map<unsigned int, unsigned int> indexMap;
 };
 
 #endif /* DA_TP_CLASSES_GRAPH */

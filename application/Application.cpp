@@ -11,7 +11,16 @@ void Application::start() {
 //    fileReader.read(TOY_GRAPH, "shipping.csv", graph);
     timer.start();
     fileReader.read(TOY_GRAPH, "shipping.csv", graph);
+
 //    std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
+
+
+    for (Vertex* vertex: graph->getVertexSet()){
+        std::cout << "Id: " << vertex->getId() << std::endl;
+    }
+
+    std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
+
 //    fileReader.read(EXTRA_GRAPH, "edges_900.csv", graph);
     std::cout << "---------------------------------------------------------------" << std::endl;
     backtraking = Backtraking(graph);
