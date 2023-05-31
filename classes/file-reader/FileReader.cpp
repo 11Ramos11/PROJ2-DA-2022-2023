@@ -144,8 +144,6 @@ int FileReader::readExtraGraph(const std::string& fileName){
 
     std::string line;
 
-    std::getline(file, line);
-
     std::string originID, destinationID, distance;
 
     while (std::getline(file, line)) {

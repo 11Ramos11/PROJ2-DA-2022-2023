@@ -93,13 +93,11 @@ Tour OtherHeuristics::twoOptSwap(Tour &tour, int i, int j){
 
 Tour OtherHeuristics::twoOpt(Tour &tour){
 
-    unsigned int improvements = 20;
+    unsigned int improvements = 3;
 
     Tour finalTour = tour;
 
-    while (improvements){
-
-        improvements--;
+    while (improvements--) {
 
         std::vector<Edge*> tourEdges = finalTour.getEdges();
 
@@ -110,11 +108,10 @@ Tour OtherHeuristics::twoOpt(Tour &tour){
             for (int j = i + 1; j < tourEdges.size(); j++){
 
                 Tour newTour = twoOptSwap(finalTour,i,j);
-                unsigned int newCost = round(newTour.getCost() * 1000);
-                unsigned int oldCost = round(bestCost * 1000);
+                double newCost = round(newTour.getCost() * 1000);
+                double oldCost = round(bestCost * 1000);
                 if (newCost < oldCost){
                     finalTour = newTour;
-                    improvements = 20;
                     bestCost = newTour.getCost();
                 }
             }
@@ -142,30 +139,27 @@ bool OtherHeuristics::shouldAccept(unsigned int oldCost, unsigned int newCost, f
 
 Tour OtherHeuristics::simulatedAnnealing(Tour &tour){
 
-    unsigned int improvements = 20;
+    unsigned int improvements = 3;
 
     float temperature = 100;
 
     Tour finalTour = tour;
 
-    while (improvements){
-
-        improvements--;
+    while (improvements--){
 
         std::vector<Edge*> tourEdges = finalTour.getEdges();
 
         double bestCost = finalTour.getCost();
 
-        for (int i = 0; i < tourEdges.size() - 1; i++){
+        for (int i = 0; i < tourEdges.size() - 1; i ++){
 
-            for (int j = i + 1; j < tourEdges.size(); j++){
+            for (int j = i + 1; j < tourEdges.size(); j ++){
 
                 Tour newTour = twoOptSwap(finalTour,i,j);
                 unsigned int newCost = round(newTour.getCost() * 1000);
                 unsigned int oldCost = round(bestCost * 1000);
                 if (shouldAccept(oldCost, newCost, temperature)){
                     finalTour = newTour;
-                    improvements = 20;
                     bestCost = finalTour.getCost();
                 }
                 temperature *= 0.999;
