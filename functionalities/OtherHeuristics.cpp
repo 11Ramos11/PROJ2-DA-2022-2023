@@ -7,7 +7,7 @@
 
 OtherHeuristics::OtherHeuristics(std::shared_ptr<Graph> graph) : graph(graph) {}
 
-int OtherHeuristics::nearestNeighbours(Tour &tour){
+int OtherHeuristics::nearestNeighbour(Tour &tour){
 
     if (graph->getNumVertex() == 0)
         return 1;
@@ -91,36 +91,86 @@ Tour OtherHeuristics::twoOptSwap(Tour &tour, int i, int j){
     return newTour;
 }
 
-int OtherHeuristics::twoOpt(Tour &tour){
+Tour OtherHeuristics::twoOpt(Tour &tour){
 
     unsigned int improvements = 20;
+
+    Tour finalTour = tour;
 
     while (improvements){
 
         improvements--;
 
-        std::vector<Edge*> tourEdges = tour.getEdges();
+        std::vector<Edge*> tourEdges = finalTour.getEdges();
 
-        double bestCost = tour.getCost();
+        double bestCost = finalTour.getCost();
 
         for (int i = 0; i < tourEdges.size() - 1; i++){
 
-            int x = 1;
+            for (int j = i + 1; j < tourEdges.size(); j++){
 
-            for (int j = i + 1; j < tourEdges.size(); j += x){
-
-                Tour newTour = twoOptSwap(tour,i,j);
-
-                if (round(newTour.getCost() * 1000) < round(bestCost * 1000)){
-                    tour = newTour;
+                Tour newTour = twoOptSwap(finalTour,i,j);
+                unsigned int newCost = round(newTour.getCost() * 1000);
+                unsigned int oldCost = round(bestCost * 1000);
+                if (newCost < oldCost){
+                    finalTour = newTour;
                     improvements = 20;
                     bestCost = newTour.getCost();
-                    x = 1;
-                } else {
-                    x *= 2;
                 }
             }
         }
     }
-    return 0;
+    return finalTour;
+}
+
+bool OtherHeuristics::shouldAccept(unsigned int oldCost, unsigned int newCost, float temperature){
+
+    if (newCost < oldCost)
+        return true;
+
+    if (newCost == oldCost)
+        return false;
+
+    double delta = (newCost - oldCost) / 1000;
+
+    double probability = std::exp((-delta) / temperature);
+
+    float random = (float) rand() / RAND_MAX;
+
+    return random < probability;
+}
+
+Tour OtherHeuristics::simulatedAnnealing(Tour &tour){
+
+    unsigned int improvements = 20;
+
+    float temperature = 100;
+
+    Tour finalTour = tour;
+
+    while (improvements){
+
+        improvements--;
+
+        std::vector<Edge*> tourEdges = finalTour.getEdges();
+
+        double bestCost = finalTour.getCost();
+
+        for (int i = 0; i < tourEdges.size() - 1; i++){
+
+            for (int j = i + 1; j < tourEdges.size(); j++){
+
+                Tour newTour = twoOptSwap(finalTour,i,j);
+                unsigned int newCost = round(newTour.getCost() * 1000);
+                unsigned int oldCost = round(bestCost * 1000);
+                if (shouldAccept(oldCost, newCost, temperature)){
+                    finalTour = newTour;
+                    improvements = 20;
+                    bestCost = finalTour.getCost();
+                }
+                temperature *= 0.999;
+            }
+        }
+    }
+    return finalTour;
 }

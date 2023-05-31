@@ -16,11 +16,15 @@ public:
 
     OtherHeuristics(std::shared_ptr<Graph> graph);
 
-    int nearestNeighbours(Tour &tour);
+    int nearestNeighbour(Tour &tour);
 
-    int twoOpt(Tour &tour);
+    Tour twoOpt(Tour &tour);
 
     Tour twoOptSwap(Tour &tour, int i, int j);
+
+    bool shouldAccept(unsigned int oldCost, unsigned int newCost, float temperature);
+
+    Tour simulatedAnnealing(Tour &tour);
 };
 
 
