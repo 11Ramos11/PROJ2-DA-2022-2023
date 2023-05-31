@@ -14,6 +14,9 @@ int OtherHeuristics::nearestNeighbour(Tour &tour){
 
     for (Vertex* vertex: graph->getVertexSet()) {
         vertex->setVisited(false);
+        for (Edge* edge: vertex->getAdj()){
+            edge->setUsed(false);
+        }
     }
 
     std::vector<Vertex*> vertexSet = graph->getVertexSet();
@@ -22,43 +25,133 @@ int OtherHeuristics::nearestNeighbour(Tour &tour){
 
     Vertex* origin = vertexSet[0];
 
-    Vertex* currentVertex = origin;
+    Vertex* vertex = origin;
 
-    bool travelling = true;
+    while(true){
 
-    while (travelling){
+        Edge* minEdge = nullptr;
 
-        currentVertex->setVisited(true);
-
-        Edge *minEdge = nullptr;
-
-        for (Edge *edge: currentVertex->getAdj()) {
-            if (!edge->getDest()->isVisited()) {
-                if (minEdge == nullptr) {
-                    minEdge = edge;
-                } else if (edge->getWeight() < minEdge->getWeight()) {
+        for (Edge* edge: vertex->getAdj()){
+            if (!edge->getDest()->isVisited()){
+                if (minEdge == nullptr){
+                    if (!edge->isUsed()) {
+                        minEdge = edge;
+                    }
+                } else if (edge->getWeight() < minEdge->getWeight() && !edge->isUsed()){
                     minEdge = edge;
                 }
             }
         }
 
-        if (minEdge == nullptr) {
-            for (Edge *edge: currentVertex->getAdj()) {
-                if (edge->getDest() == origin) {
-                    minEdge = edge;
-                    travelling = false;
+        if (minEdge != nullptr){
+            tourEdges.push_back(minEdge);
+            minEdge->setUsed(true);
+            vertex->setVisited(true);
+            vertex = minEdge->getDest();
+        } else {
+            vertex->setVisited(false);
+            for (Edge* edge: vertex->getAdj()){
+                edge->setUsed(false);
+            }
+            if (tourEdges.size() == 0) {
+                break;
+            }
+            vertex = tourEdges[tourEdges.size() - 1]->getOrig();
+            tourEdges.pop_back();
+            continue;
+        }
+
+        if (tourEdges.size() == vertexSet.size() - 1){
+            Edge* lastEdge = nullptr;
+            for (Edge* edge: vertex->getAdj()){
+                if (edge->getDest() == origin){
+                    lastEdge = edge;
                     break;
                 }
             }
+            if (lastEdge != nullptr){
+                tourEdges.push_back(lastEdge);
+                lastEdge->setUsed(true);
+                break;
+            } else {
+                vertex->setVisited(false);
+                for (Edge* edge: vertex->getAdj()){
+                    edge->setUsed(false);
+                }
+                vertex = tourEdges[tourEdges.size() - 1]->getOrig();
+                tourEdges.pop_back();
+            }
         }
-        tourEdges.push_back(minEdge);
-
-        currentVertex = minEdge->getDest();
     }
 
     tour.setTour(tourEdges);
 
     return 0;
+
+//    if (graph->getNumVertex() == 0)
+//        return 1;
+//
+//    for (Vertex* vertex: graph->getVertexSet()) {
+//        vertex->setVisited(false);
+//    }
+//
+//    std::vector<Vertex*> vertexSet = graph->getVertexSet();
+//
+//    std::vector<Edge*> tourEdges;
+//
+//    Vertex* origin = vertexSet[0];
+//
+//    Vertex* currentVertex = origin;
+//
+//    bool travelling = true;
+//
+//    while (travelling){
+//
+//        currentVertex->setVisited(true);
+//
+//        Edge *minEdge = nullptr;
+//
+//        for (Edge *edge: currentVertex->getAdj()) {
+//            if (!edge->getDest()->isVisited()) {
+//                if (minEdge == nullptr) {
+//                    minEdge = edge;
+//                } else if (edge->getWeight() < minEdge->getWeight()) {
+//                    minEdge = edge;
+//                }
+//            }
+//        }
+//
+//        if (minEdge == nullptr) {
+//            for (Edge *edge: currentVertex->getAdj()) {
+//                if (edge->getDest() == origin) {
+//                    minEdge = edge;
+//                    travelling = false;
+//                    break;
+//                }
+//            }
+//        }
+//        tourEdges.push_back(minEdge);
+//
+//        currentVertex = minEdge->getDest();
+//    }
+//
+//    tour.setTour(tourEdges);
+//
+//    return 0;
+}
+
+unsigned int calculateImprovements(unsigned int numEdges) {
+    unsigned int maxImprovements = 20;
+
+    if (numEdges < 100) {
+        return maxImprovements;
+    } else if (numEdges < 500) {
+        double slope = -static_cast<double>(maxImprovements) / 400.0;
+        double improvements = maxImprovements + (numEdges - 100) * slope;
+        return static_cast<unsigned int>(improvements);
+    } else {
+        return maxImprovements / 5;
+    }
 }
 
 Tour OtherHeuristics::twoOptSwap(Tour &tour, int i, int j){
@@ -73,6 +166,9 @@ Tour OtherHeuristics::twoOptSwap(Tour &tour, int i, int j){
     }
 
     Edge* e1 = graph->getEdge(tourEdges[i]->getOrig()->getId(), tourEdges[j]->getOrig()->getId());
+    if (e1 == nullptr){
+        return tour;
+    }
     newTourEdges.push_back(e1);
     for (int c = j - 1; c > i; c--){
         Edge* edge = tourEdges[c];
@@ -81,6 +177,10 @@ Tour OtherHeuristics::twoOptSwap(Tour &tour, int i, int j){
 
     Edge* e2 = graph->getEdge(tourEdges[i]->getDest()->getId(), tourEdges[j]->getDest()->getId());
     newTourEdges.push_back(e2);
+
+    if (e2 == nullptr){
+        return tour;
+    }
 
     for (int c = j + 1; c < tourEdges.size(); c++){
         newTourEdges.push_back(tourEdges[c]);
@@ -93,9 +193,9 @@ Tour OtherHeuristics::twoOptSwap(Tour &tour, int i, int j){
 
 Tour OtherHeuristics::twoOpt(Tour &tour){
 
-    unsigned int improvements = 3;
-
     Tour finalTour = tour;
+
+    unsigned int improvements = calculateImprovements(tour.getEdges().size());
 
     while (improvements--) {
 
@@ -139,8 +239,8 @@ bool OtherHeuristics::shouldAccept(unsigned int oldCost, unsigned int newCost, f
 
 Tour OtherHeuristics::simulatedAnnealing(Tour &tour){
 
-    unsigned int improvements = 3;
-
+    unsigned int maxImprovements = calculateImprovements(tour.getEdges().size());
+    unsigned int improvements = maxImprovements;
     float temperature = 100;
 
     Tour finalTour = tour;
@@ -161,6 +261,9 @@ Tour OtherHeuristics::simulatedAnnealing(Tour &tour){
                 if (shouldAccept(oldCost, newCost, temperature)){
                     finalTour = newTour;
                     bestCost = finalTour.getCost();
+                    if (tour.getEdges().size() < 100) {
+                        improvements = maxImprovements;
+                    }
                 }
                 temperature *= 0.999;
             }

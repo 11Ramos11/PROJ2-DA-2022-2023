@@ -42,7 +42,7 @@ int FileReader::read(graphType type, const std::string& name, std::shared_ptr<Gr
 
 int FileReader::readToyGraph(const std::string& fileName){
 
-    std::string path = "../data/toy-graphs/" + fileName;
+    std::string path = "../data/toy-graphs/" + fileName + ".csv";
 
     std::ifstream file(path);
 
@@ -133,7 +133,7 @@ int FileReader::readRealGraph(const std::string& folderName){
 
 int FileReader::readExtraGraph(const std::string& fileName){
 
-    std::string path = "../data/extra-fully-connected-graphs/" + fileName;
+    std::string path = "../data/extra-fully-connected-graphs/" + fileName + ".csv";
 
     std::ifstream file(path);
 

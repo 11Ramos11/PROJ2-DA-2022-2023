@@ -129,3 +129,13 @@ void Edge::setMinResidual(int minResidual){
 Edge *Edge::getReverse() const {
     return this->reverse;
 }
+
+void Edge::setUsed(bool used) {
+    this->used = used;
+}
+
+bool Edge::isUsed() const {
+    return this->used;
+}
+
+// function to overload < so, edges with less weight come first in priority queue
