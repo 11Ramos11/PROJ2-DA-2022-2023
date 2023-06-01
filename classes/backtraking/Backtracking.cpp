@@ -6,6 +6,7 @@
 
 #include "Backtracking.h"
 #include "VertexEdge.h"
+#include "../../functionalities/Tour.h"
 
 Backtracking::Backtracking(std::shared_ptr<Graph> &graph) : graph(graph) {}
 
@@ -61,26 +62,28 @@ void Backtracking::tspCicle(std::vector<Vertex *> &vertices, int size, int index
     }
 }
 
-std::pair<double, std::vector<Vertex *>> Backtracking::tspBacktracking() {
-    std::vector<Vertex *> bestCicle;
+Tour Backtracking::tspBacktracking() {
+
     double minDistance = std::numeric_limits<double>::max();
 
     std::vector<Vertex *> vertices = graph->getVertexSet();
     int size = vertices.size();
     std::vector<int> actualPath(size);
     actualPath[0] = vertices[0]->getId();
-    std::vector<int> tour(size);
+    std::vector<int> tourIds(size);
 
-    tspCicle(vertices, size, 1, 0, actualPath, minDistance, tour);
+    tspCicle(vertices, size, 1, 0, actualPath, minDistance, tourIds);
 
-    for (int id: tour) {
-        for (Vertex *vertex: vertices) {
-            if (vertex->getId() == id) {
-                bestCicle.push_back(vertex);
-                break;
-            }
-        }
+    std::vector<Edge*> tourEdges;
+
+    for (int i = 0; i < tourIds.size() - 1; i++){
+        tourEdges.push_back(graph->getEdge(tourIds[i], tourIds[i+1]));
     }
 
-    return {minDistance, bestCicle};
+    tourEdges.push_back(graph->getEdge(tourIds[tourIds.size() - 1], tourIds[0]));
+
+    Tour tour;
+    tour.setTour(tourEdges);
+
+    return tour;
 }

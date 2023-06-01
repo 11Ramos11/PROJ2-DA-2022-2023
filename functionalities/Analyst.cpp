@@ -148,6 +148,7 @@ void Analyst::stopTimer() {
 
 void Analyst::analyze(Tour tour) {
 
+    this->stopTimer();
     double microSeconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     double time = microSeconds / 1000;
 
@@ -159,5 +160,9 @@ void Analyst::analyze(Tour tour) {
         std::cout << "Approximation Absolute Error: " << tour.getCost() - lowerBound << std::endl;
         std::cout << "Approximation Lower Bound: " << lowerBound << std::endl;
     }
-    std::cout << "Approximation Time: " << time << "ms" << std::endl;
+    if (time > 1000){
+        std::cout << "Approximation Time: " << time / 1000 << "s" << std::endl;
+    } else {
+        std::cout << "Approximation Time: " << time << "ms" << std::endl;
+    }
 }

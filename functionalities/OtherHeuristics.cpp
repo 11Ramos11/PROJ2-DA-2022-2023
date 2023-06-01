@@ -87,57 +87,6 @@ int OtherHeuristics::nearestNeighbour(Tour &tour){
     tour.setTour(tourEdges);
 
     return 0;
-
-//    if (graph->getNumVertex() == 0)
-//        return 1;
-//
-//    for (Vertex* vertex: graph->getVertexSet()) {
-//        vertex->setVisited(false);
-//    }
-//
-//    std::vector<Vertex*> vertexSet = graph->getVertexSet();
-//
-//    std::vector<Edge*> tourEdges;
-//
-//    Vertex* origin = vertexSet[0];
-//
-//    Vertex* currentVertex = origin;
-//
-//    bool travelling = true;
-//
-//    while (travelling){
-//
-//        currentVertex->setVisited(true);
-//
-//        Edge *minEdge = nullptr;
-//
-//        for (Edge *edge: currentVertex->getAdj()) {
-//            if (!edge->getDest()->isVisited()) {
-//                if (minEdge == nullptr) {
-//                    minEdge = edge;
-//                } else if (edge->getWeight() < minEdge->getWeight()) {
-//                    minEdge = edge;
-//                }
-//            }
-//        }
-//
-//        if (minEdge == nullptr) {
-//            for (Edge *edge: currentVertex->getAdj()) {
-//                if (edge->getDest() == origin) {
-//                    minEdge = edge;
-//                    travelling = false;
-//                    break;
-//                }
-//            }
-//        }
-//        tourEdges.push_back(minEdge);
-//
-//        currentVertex = minEdge->getDest();
-//    }
-//
-//    tour.setTour(tourEdges);
-//
-//    return 0;
 }
 
 unsigned int calculateImprovements(unsigned int numEdges) {
@@ -160,6 +109,8 @@ Tour OtherHeuristics::twoOptSwap(Tour &tour, int i, int j){
 
     Tour newTour;
     std::vector<Edge*> newTourEdges;
+
+    newTourEdges.reserve(tourEdges.size());
 
     for (int c = 0; c < i; c++){
         newTourEdges.push_back(tourEdges[c]);

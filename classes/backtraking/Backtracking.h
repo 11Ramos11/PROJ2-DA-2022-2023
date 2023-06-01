@@ -8,6 +8,7 @@
 #define PROJ2_DA_2022_2023_BACKTRACKING_H
 
 #include "Graph.h"
+#include "../../functionalities/Tour.h"
 
 /** @brief Backtracking class that contains the backtracking algorithmic approach to the TSP.
  *
@@ -46,7 +47,7 @@ public:
      * @return A pair where the first element is the minimum distance of the best cycle found,
      * and the second element is a vector of Vertex pointers that represents the best cycle.
      */
-    std::pair<double, std::vector<Vertex *>> tspBacktracking();
+    Tour tspBacktracking();
 
     /** @brief Finds a path that traverses all vertices in the graph once and returns to the starting vertex.
     *

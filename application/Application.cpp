@@ -348,12 +348,15 @@ void Application::functionalitiesMenu(){
 
     switch(choice){
         case 1: {
-            auto res = Backtracking(graph).tspBacktracking();
-            std::cout << res.first << std::endl;
+            analyst.startTimer();
+            currentTour = Backtracking(graph).tspBacktracking();
+            analyst.analyze(currentTour);
             break;
         }
         case 2: {
-            Heuristic(graph).dfs();
+            analyst.startTimer();
+            currentTour = Heuristic(graph).dfs();
+            analyst.analyze(currentTour);
             break;
         }
         case 3: {
@@ -441,10 +444,9 @@ void Application::otherHeuristicsMenu(){
         std::cout << "    Routing Algorithm for Ocean Shipping and Urban Deliveries!    " << std::endl;
         std::cout << "------------------------------------------------------------------" << std::endl;
         std::cout << "1. Generate Nearest Neighbour Approximation" << std::endl;
-        //std::cout << "2. Generate Random Approximation" << std::endl;
         if (currentTour.isSetted()){
-            std::cout << "3. Improve Approximation with 2-Opt" << std::endl;
-            std::cout << "4. Improve Approximation with Simulated Annealing" << std::endl;
+            std::cout << "2. Improve Approximation with 2-Opt" << std::endl;
+            std::cout << "3. Improve Approximation with Simulated Annealing" << std::endl;
         }
         std::cout << "9. Go Back" << std::endl;
         std::cout << "0. Quit" << std::endl;
@@ -452,13 +454,13 @@ void Application::otherHeuristicsMenu(){
         std::cin >> stringChoice;
         std::cin.ignore(1000,'\n');
 
-        if(!(stringChoice == "0" || stringChoice == "1" /*|| stringChoice =="2"*/ || stringChoice =="9") &&
-           ((stringChoice == "3" || stringChoice == "4") && !currentTour.isSetted())){
+        if(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="9") &&
+           ((stringChoice == "2" || stringChoice == "3") && !currentTour.isSetted())){
             std::cout << "Invalid option number!";
         }
     }
-    while(!(stringChoice == "0" || stringChoice == "1" /*|| stringChoice =="2"*/ || stringChoice =="9") &&
-            ((stringChoice == "3" || stringChoice == "4") && !currentTour.isSetted()));
+    while(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="9") &&
+            ((stringChoice == "2" || stringChoice == "3") && !currentTour.isSetted()));
 
     choice = std::stoi(stringChoice);
 
@@ -466,24 +468,18 @@ void Application::otherHeuristicsMenu(){
         case 1: {
             analyst.startTimer();
             OtherHeuristics(graph).nearestNeighbour(currentTour);
-            analyst.stopTimer();
             analyst.analyze(currentTour);
             break;
         }
         case 2: {
+            analyst.startTimer();
+            currentTour = OtherHeuristics(graph).twoOpt(currentTour);
+            analyst.analyze(currentTour);
             break;
         }
         case 3: {
             analyst.startTimer();
-            currentTour = OtherHeuristics(graph).twoOpt(currentTour);
-            analyst.stopTimer();
-            analyst.analyze(currentTour);
-            break;
-        }
-        case 4: {
-            analyst.startTimer();
             currentTour = OtherHeuristics(graph).simulatedAnnealing(currentTour);
-            analyst.stopTimer();
             analyst.analyze(currentTour);
             break;
         }
