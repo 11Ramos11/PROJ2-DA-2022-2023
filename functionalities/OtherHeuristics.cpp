@@ -211,7 +211,7 @@ Tour OtherHeuristics::simulatedAnnealing(Tour &tour){
                 unsigned int newCost = round(newTour.getCost() * 1000);
                 unsigned int oldCost = round(bestCost * 1000);
 
-                float temperature = 100 * pow(0.99, z);
+                float temperature = 100 * pow(0.75, z);
 
                 if (shouldAccept(oldCost, newCost, temperature)){
                     finalTour = newTour;
