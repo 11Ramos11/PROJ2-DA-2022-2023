@@ -6,7 +6,6 @@
 
 #include "Backtracking.h"
 #include "VertexEdge.h"
-#include "../../functionalities/Tour.h"
 
 Backtracking::Backtracking(std::shared_ptr<Graph> &graph) : graph(graph) {}
 
