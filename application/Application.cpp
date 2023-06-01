@@ -370,6 +370,7 @@ void Application::functionalitiesMenu(){
         }
         case 9: {
             state.pop();
+            state.pop();
             break;
         }
         case 0:
