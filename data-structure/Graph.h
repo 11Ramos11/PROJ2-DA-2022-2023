@@ -87,7 +87,7 @@ public:
      * @return A pointer for the edge
      */
     Edge* getEdge(int source, int dest);
-    
+
     /** @brief Represents the number of vertex of a graph.
      *
      * @return Number of vertex.

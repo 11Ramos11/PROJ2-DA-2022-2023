@@ -1,6 +1,8 @@
-//
-// Created by Ramos on 5/30/2023.
-//
+/** @file Tour.cpp
+ *  @brief Contains the Tour Class implementation.
+ *  @author -
+ *  @bug No known bugs.
+ */
 
 #include "Tour.h"
 

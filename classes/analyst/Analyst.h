@@ -1,6 +1,8 @@
-//
-// Created by Ramos on 5/31/2023.
-//
+/** @file Analyst.h
+ *  @brief Contains the Analyst class declaration.
+ *  @author João Ramos e Matilde Simões
+ *  @bug No known bugs.
+ */
 
 #ifndef PROJ2_DA_2022_2023_ANALYST_H
 #define PROJ2_DA_2022_2023_ANALYST_H

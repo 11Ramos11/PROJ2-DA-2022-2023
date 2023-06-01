@@ -1,6 +1,8 @@
-//
-// Created by Ramos on 5/31/2023.
-//
+/** @file Analyst.cpp
+ *  @brief Contains the Analyst Class implementation.
+ *  @author -
+ *  @bug No known bugs.
+ */
 
 #include "Analyst.h"
 

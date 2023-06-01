@@ -15,37 +15,30 @@
  */
 class Coordinates {
 
-    //! @brief The x coordinate.
-    double x;
-
-    //! @brief The y coordinate.
-    double y;
-
-public:
-
-    /** @brief Construct a new Coordinates object with the given x and y coordinates.
-     *
-     * @param x The x-coordinate.
-     * @param y The y-coordinate.
-     */
-    Coordinates(double x, double y);
-
-    /** @brief Get the x-coordinate.
-     *
-     * @return double The x-coordinate.
-     */
-    double getX() const;
-
-    /** @brief Get the y-coordinate.
-     *
-     * @return double The y-coordinate.
-     */
-    double getY() const;
+    //! @brief The longitude of the coordinate.
     double longitude;
+
+    //! @brief The latitude of the coordinate.
     double latitude;
+
 public:
+
+    /** @brief Construct a new Coordinates object with the given longitude and latitude coordinates.
+     *
+     * @param longitude of double type.
+     * @param latitude of double type.
+     */
     Coordinates(double longitude, double latitude);
 
+    /** @brief Compute the distance from this coordinate to another coordinate.
+     *
+     * This method calculates the haversine distance from this coordinate to the given coordinate.
+     * The haversine formula calculates the shortest distance over the earth's surface, giving the distance
+     * between the points.
+     *
+     * @param coordinates The other coordinate to which the distance is to be calculated.
+     * @return double The haversine distance to the other coordinate in kilometers.
+     */
     double distanceTo(Coordinates coordinates);
 };
 

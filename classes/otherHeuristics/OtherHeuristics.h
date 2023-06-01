@@ -1,6 +1,8 @@
-//
-// Created by Ramos on 5/30/2023.
-//
+/** @file OtherHeuristics.h
+ *  @brief Contains the OtherHeuristics class declaration.
+ *  @author João Ramos e Matilde Simões
+ *  @bug No known bugs.
+ */
 
 #ifndef PROJ2_DA_2022_2023_OTHERHEURISTICS_H
 #define PROJ2_DA_2022_2023_OTHERHEURISTICS_H
