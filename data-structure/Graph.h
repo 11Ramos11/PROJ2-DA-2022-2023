@@ -89,6 +89,14 @@ public:
      */
     void dfs(int source);
 
+    /** @brief Obtains the edge weight between two specific vertex.
+     *
+     * @param vertex1 of Vertex* type.
+     * @param vertex2 of Vertex* type.
+     * @return The edge weight.
+     */
+    double getEdgeWeightBetween(Vertex *vertex1, Vertex *vertex2);
+
     /** @brief Remove the vertex from the graph.
      *
      * @param id of int type.

@@ -9,29 +9,45 @@
 void Application::start() {
 
 //    fileReader.read(TOY_GRAPH, "shipping.csv", graph);
-    timer.start();
-    fileReader.read(TOY_GRAPH, "stadiums.csv", graph);
+    /*timer.start();
+    fileReader.read(TOY_GRAPH, "stadiums.csv", graph);*/
 
 //    std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
 
+    /*heuristic = Heuristic(graph);
+    std::vector<std::tuple<int, int, double>> res = heuristic.prim();
+    for(const auto& t : res){
+        int source = std::get<0>(t);
+        int destination = std::get<1>(t);
+        double weight = std::get<2>(t);
+        std::cout << "(" << source << ", " << destination << ", " << weight << ")-";
+    }*/
 
-    for (Vertex* vertex: graph->getVertexSet()){
+    /*std::pair<double, std::vector<int>> tour = heuristic.dfs();
+    std::cout << tour.first << std::endl;
+    for(auto k : tour.second){
+        std::cout << k << " ";
+    }*/
+
+
+    /*for (Vertex* vertex: graph->getVertexSet()){
         std::cout << "Id: " << vertex->getId() << std::endl;
     }
+    backtraking = Backtracking(graph);
+    auto res = backtraking.tspBacktracking();
+    std::cout << res.first << std::endl;
 
-    std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
+    //std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
 
 //    fileReader.read(EXTRA_GRAPH, "edges_900.csv", graph);
-    std::cout << "---------------------------------------------------------------" << std::endl;
-    backtraking = Backtraking(graph);
-    auto res = backtraking.tspBacktraking();
-    std::cout << res.first << std::endl;
+    std::cout << "---------------------------------------------------------------" << std::endl;*/
+
     //std::cout << res.first << std::endl;
-//    state.push(WELCOME_MENU);
-//    getMenu();
+    state.push(WELCOME_MENU);
+    getMenu();
 }
 
-/*void Application::welcomeMenu(){
+void Application::welcomeMenu(){
 
     std::cout << "----------------------------------------------------------------------------" << std::endl;
     std::cout << " Welcome to the Routing Algorithm for Ocean Shipping and Urban Deliveries!" << std::endl;
@@ -68,17 +84,13 @@ void Application::readMenu(){
 
     switch(choice){
         case 1:
-            state.push(SERVICES_MENU);
+            state.push(TOY_MENU);
             break;
         case 2:
-            state.push(COST_MENU);
+            state.push(EXTRA_MENU);
             break;
         case 3: {
-            state.push(FAILURE_MENU);
-            break;
-        }
-        case 9: {
-            state.push(READ_MENU);
+            state.push(REAL_MENU);
             break;
         }
         case 0:
@@ -87,63 +99,45 @@ void Application::readMenu(){
     getMenu();
 }
 
-void Application::readFileMenu(){
+void Application::toyMenu(){
     do{
         std::cout << std::endl << std::endl << std::endl;
-        std::cout << "------------------------------------------------------" << std::endl;
-        std::cout << "    Analysis Tool for Railway Network Management" << std::endl;
-        std::cout << "------------------------------------------------------" << std::endl;
-        std::cout << "1. Read Toy Graphs" << std::endl;
-        std::cout << "2. Read Real Word Graphs" << std::endl;
-        std::cout << "3. Read Extra Fully Connected Graphs" << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "    Routing Algorithm for Ocean Shipping and Urban Deliveries!" << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "1. Shipping" << std::endl;
+        std::cout << "2. Stadiums" << std::endl;
+        std::cout << "3. Tourism" << std::endl;
+        std::cout << "9. Go Back" << std::endl;
         std::cout << "0. Quit" << std::endl << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> stringChoice;
         std::cin.ignore(1000,'\n');
 
-        if(!(stringChoice=="1" ||stringChoice=="2" ||stringChoice=="3" ||stringChoice=="0")){
+        if(!(stringChoice=="1" ||stringChoice=="2" ||stringChoice=="3" ||stringChoice=="0" ||stringChoice=="9")){
             std::cout << "Invalid option number!";
         }
     }
-    while(!(stringChoice=="1" ||stringChoice=="2" || stringChoice=="3" ||stringChoice=="0"));
-}
-
-void Application::initialMenu(){
-    do{
-        std::cout << std::endl << std::endl << std::endl;
-        std::cout << "------------------------------------------------------" << std::endl;
-        std::cout << "    Analysis Tool for Railway Network Management" << std::endl;
-        std::cout << "------------------------------------------------------" << std::endl;
-        std::cout << "1. Basic Service Metrics" << std::endl;
-        std::cout << "2. Operation Cost Optimization" << std::endl;
-        std::cout << "3. Reliability and Sensitivity to Line Failures" << std::endl;
-        std::cout << "9. Go back" << std::endl;
-        std::cout << "0. Quit" << std::endl << std::endl;
-        std::cout << "Enter your choice: ";
-        std::cin >> stringChoice;
-        std::cin.ignore(1000,'\n');
-
-        if(!(stringChoice=="1" ||stringChoice=="2" ||stringChoice=="3" || stringChoice=="9" ||stringChoice=="0")){
-            std::cout << "Invalid option number!";
-        }
-    }
-    while(!(stringChoice=="1" ||stringChoice=="2" ||stringChoice=="3" || stringChoice=="9" ||stringChoice=="0"));
+    while(!(stringChoice=="1" ||stringChoice=="2" || stringChoice=="3" ||stringChoice=="0" ||stringChoice=="9"));
 
     choice = std::stoi(stringChoice);
 
     switch(choice){
         case 1:
-            state.push(SERVICES_MENU);
+            fileReader.read(TOY_GRAPH, "shipping.csv", graph);
+            state.push(FUNC_MENU);
             break;
         case 2:
-            state.push(COST_MENU);
+            fileReader.read(TOY_GRAPH, "stadiums.csv", graph);
+            state.push(FUNC_MENU);
             break;
         case 3: {
-            state.push(FAILURE_MENU);
+            fileReader.read(TOY_GRAPH, "tourism.csv", graph);
+            state.push(FUNC_MENU);
             break;
         }
         case 9: {
-            state.push(READ_MENU);
+            state.pop();
             break;
         }
         case 0:
@@ -152,58 +146,197 @@ void Application::initialMenu(){
     getMenu();
 }
 
-void Application::servicesMenu(){
+void Application::extraMenu(){
+    do{
+        std::cout << std::endl << std::endl << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "    Routing Algorithm for Ocean Shipping and Urban Deliveries!" << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "1. Edges_25" << std::endl;
+        std::cout << "2. Edges_50" << std::endl;
+        std::cout << "3. Edges_75" << std::endl;
+        std::cout << "4. Edges_100" << std::endl;
+        std::cout << "5. Edges_200" << std::endl;
+        std::cout << "6. Edges_300" << std::endl;
+        std::cout << "7. Edges_400" << std::endl;
+        std::cout << "8. Edges_500" << std::endl;
+        std::cout << "9. Edges_600" << std::endl;
+        std::cout << "10. Edges_700" << std::endl;
+        std::cout << "11. Edges_800" << std::endl;
+        std::cout << "12. Edges_900" << std::endl;
+        std::cout << "13. Go back" << std::endl;
+        std::cout << "0. Quit" << std::endl << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> stringChoice;
+        std::cin.ignore(1000,'\n');
+
+        if(!(stringChoice=="1" ||stringChoice=="2" ||stringChoice=="3" || stringChoice=="9" ||stringChoice=="0" ||
+            stringChoice=="4" ||stringChoice=="5" ||stringChoice=="6" || stringChoice=="7" ||stringChoice=="8" ||
+            stringChoice=="10" ||stringChoice=="11" ||stringChoice=="12" || stringChoice=="13")){
+            std::cout << "Invalid option number!";
+        }
+    }
+    while(!(stringChoice=="1" ||stringChoice=="2" ||stringChoice=="3" || stringChoice=="9" ||stringChoice=="0" ||
+            stringChoice=="4" ||stringChoice=="5" ||stringChoice=="6" || stringChoice=="7" ||stringChoice=="8" ||
+            stringChoice=="10" ||stringChoice=="11" ||stringChoice=="12" || stringChoice=="13"));
+
+    choice = std::stoi(stringChoice);
+
+    switch(choice){
+        case 1:
+            fileReader.read(EXTRA_GRAPH, "edges_25.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        case 2:
+            fileReader.read(EXTRA_GRAPH, "edges_50.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        case 3: {
+            fileReader.read(EXTRA_GRAPH, "edges_75.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 4: {
+            fileReader.read(EXTRA_GRAPH, "edges_100.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 5: {
+            fileReader.read(EXTRA_GRAPH, "edges_200.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 6: {
+            fileReader.read(EXTRA_GRAPH, "edges_300.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 7: {
+            fileReader.read(EXTRA_GRAPH, "edges_400.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 8: {
+            fileReader.read(EXTRA_GRAPH, "edges_500.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 9: {
+            fileReader.read(EXTRA_GRAPH, "edges_600.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 10: {
+            fileReader.read(EXTRA_GRAPH, "edges_700.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 11: {
+            fileReader.read(EXTRA_GRAPH, "edges_800.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 12: {
+            fileReader.read(EXTRA_GRAPH, "edges_900.csv", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 13: {
+            state.pop();
+            break;
+        }
+        case 0:
+            exit(0);
+    }
+    getMenu();
+}
+
+void Application::realMenu(){
     do{
        std::cout << std::endl << std::endl << std::endl;
-        std::cout << "------------------------------------------------------" << std::endl;
-        std::cout << "              Basic Services Metrics" << std::endl;
-        std::cout << "------------------------------------------------------" << std::endl;
-        std::cout << "1. Maximum number of trains between two specific stations" << std::endl;
-        std::cout << "2. Pairs of stations that require the most amount of trains" << std::endl;
-        std::cout << "3. Top-k municipalities" << std::endl;
-        std::cout << "4. Top-k districts" << std::endl;
-        std::cout << "5. Maximum number of trains that arrive at a given station" << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "    Routing Algorithm for Ocean Shipping and Urban Deliveries!" << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "1. Graph1" << std::endl;
+        std::cout << "2. Graph2" << std::endl;
+        std::cout << "3. Graph3" << std::endl;
         std::cout << "9. Go Back" << std::endl;
         std::cout << "0. Quit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> stringChoice;
         std::cin.ignore(1000,'\n');
 
-        if(stringChoice < "0" || stringChoice == "6" || stringChoice =="7" || stringChoice == "8" || stringChoice >"9"){
+        if(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice =="9")){
             std::cout << "Invalid option number!";
         }
     }
-    while(stringChoice < "0" || stringChoice == "6" || stringChoice =="7" || stringChoice == "8" || stringChoice >"9");
+    while(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice =="9"));
 
     choice = std::stoi(stringChoice);
 
     switch(choice){
         case 1: {
-            std::string source;
-            std::string target;
-
-            std::cout << "Name of the source station: ";
-            getline(std::cin, source);
-            std::cout << "Name of the target station: ";
-            getline(std::cin, target);
-
-            auto sourceID = stations[source];
-            auto targetID = stations[target];
-            if(sourceID== nullptr || targetID== nullptr){
-                std::cout<< "Invalid station names!";
-                break;
-            }
-            double maxFlow = basicServices.maxFlow(sourceID->getId(), targetID->getId());
-            if(maxFlow == -1){
-                std::cout << "Inaccessible stations!";
-            }
-            else{
-                std::cout << "The maximum amount of trains: " << maxFlow;
-            }
-
+            fileReader.read(REAL_GRAPH, "graph1", graph);
+            state.push(FUNC_MENU);
             break;
         }
+        case 2: {
+            fileReader.read(REAL_GRAPH, "graph2", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 3: {
+            fileReader.read(REAL_GRAPH, "graph3", graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 9: {
+            state.pop();
+            break;
+        }
+        case 0:
+            exit(0);
+    }
+    getMenu();
+}
 
+void Application::functionalitiesMenu(){
+    do{
+        std::cout << std::endl << std::endl << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "    Routing Algorithm for Ocean Shipping and Urban Deliveries!" << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "1. Backtracking Algorithm" << std::endl;
+        std::cout << "2. Triangular Approximation Heuristic" << std::endl;
+        std::cout << "3. Other Heuristics" << std::endl;
+        std::cout << "9. Go Back" << std::endl;
+        std::cout << "0. Quit" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> stringChoice;
+        std::cin.ignore(1000,'\n');
+
+        if(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice =="9")){
+            std::cout << "Invalid option number!";
+        }
+    }
+    while(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice =="9"));
+
+    choice = std::stoi(stringChoice);
+
+    switch(choice){
+        case 1: {
+            backtraking = Backtracking(graph);
+            auto res = backtraking.tspBacktracking();
+            std::cout << res.first << std::endl;
+            break;
+        }
+        case 2: {
+            heuristic.dfs();
+            break;
+        }
+        case 3: {
+            break;
+        }
         case 9: {
             state.pop();
             break;
@@ -224,13 +357,18 @@ void Application::getMenu(){
             case READ_MENU:
                 readMenu();
                 break;
-            case READ_FILE_MENU:
-                readFileMenu();
+            case TOY_MENU:
+                toyMenu();
                 break;
-            case INITIAL_MENU:
-                initialMenu();
+            case EXTRA_MENU:
+                extraMenu();
+                break;
+            case REAL_MENU:
+                realMenu();
+                break;
+            case FUNC_MENU:
+                functionalitiesMenu();
                 break;
         }
     }
 }
-*/

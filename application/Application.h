@@ -12,7 +12,8 @@
 #include <stack>
 #include "../file-reader/FileReader.h"
 #include "../classes/timer/Timer.h"
-#include "../classes/backtraking/Backtraking.h"
+#include "../classes/backtraking/Backtracking.h"
+#include "../classes/heuristic/Heuristic.h"
 
 
 /** @brief Initializes and manages all the components of the application.
@@ -30,18 +31,18 @@ class Application {
     //! @brief Initialization of the timer.
     Timer timer = Timer();
 
-    Backtraking backtraking = Backtraking(graph);
+    Backtracking backtraking = Backtracking(graph);
+
+    Heuristic heuristic = Heuristic(graph);
 
     //! @brief Creates the initial menu options.
     enum States {
         WELCOME_MENU,
         READ_MENU,
-        READ_FILE_MENU,
-        INITIAL_MENU,
-        SERVICES_MENU,
-        COST_MENU,
-        FAILURE_MENU,
-        GRAPHS_MENU
+        TOY_MENU,
+        EXTRA_MENU,
+        REAL_MENU,
+        FUNC_MENU
     };
 
     //! @brief Initialization of the user choice.
@@ -54,12 +55,12 @@ class Application {
     std::stack<States> state;
 
 public:
+
     /** @brief Starts the project.
      *
      * @return Void.
      */
     void start();
-
 
     /** @brief Controls the application states.
      *
@@ -79,37 +80,19 @@ public:
      */
     void readMenu();
 
+    void toyMenu();
+
+    void extraMenu();
+
+    void realMenu();
+
+    void functionalitiesMenu();
+
     /** @brief Displays the initial menu.
      *
      * @return Void.
      */
     void initialMenu();
-
-    /** @brief Displays the Basic Service Metrics menu and the information that the user chooses to know.
-     *
-     * @return Void.
-     */
-    void servicesMenu();
-
-    /** @brief Displays the Operation Cost Optimization menu and the information that the user chooses to know.
-     *
-     * @return Void.
-     */
-    void costMenu();
-
-    /** @brief Displays the Reliability and Sensitivity to Line Failures menu and the information
-     * that the user chooses to know.
-     *
-     * @return Void.
-     */
-    void failureMenu();
-
-    /** @brief Displays the Reliability and Sensitivity to Line Failures menu and the information
-     * that the user chooses to know.
-     *
-     * @return Void.
-     */
-    void graphsMenu();
 };
 
 #endif //PROJ1_DA_2022_2023_APPLICATION_H

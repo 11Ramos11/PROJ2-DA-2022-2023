@@ -90,6 +90,15 @@ bool Graph::addBidirectionalEdge(const int &source, const int &dest, double w) {
     return true;
 }
 
+double Graph::getEdgeWeightBetween(Vertex *vertex1, Vertex *vertex2) {
+    for (Edge *edge: vertex1->getAdj()) {
+        if (edge->getDest()->getId() == vertex2->getId()) {
+            return edge->getWeight();
+        }
+    }
+    return std::numeric_limits<double>::max();
+}
+
 void Graph::removeVertex(int id) {
     auto it = vertexSet.begin();
 

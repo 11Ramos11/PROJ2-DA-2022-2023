@@ -7,7 +7,6 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <utility>
 #include "FileReader.h"
 
 FileReader::FileReader() = default;
