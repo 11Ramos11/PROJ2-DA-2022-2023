@@ -7,13 +7,15 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+
 #include <utility>
 #include <cmath>
+
 #include "FileReader.h"
 
 FileReader::FileReader() = default;
 
-int FileReader::read(graphType type, const std::string& name, std::shared_ptr<Graph>& graph) {
+int FileReader::read(graphType type, const std::string &name, std::shared_ptr<Graph> &graph) {
 
     this->graph.reset(new Graph());
 
@@ -40,7 +42,7 @@ int FileReader::read(graphType type, const std::string& name, std::shared_ptr<Gr
     return 0;
 }
 
-int FileReader::readToyGraph(const std::string& fileName){
+int FileReader::readToyGraph(const std::string &fileName) {
 
     std::string path = "../data/toy-graphs/" + fileName + ".csv";
 
@@ -72,7 +74,7 @@ int FileReader::readToyGraph(const std::string& fileName){
 }
 
 
-int FileReader::readRealGraph(const std::string& folderName){
+int FileReader::readRealGraph(const std::string &folderName) {
 
     std::string path = "../data/real-world-graphs/" + folderName;
 
@@ -122,16 +124,16 @@ int FileReader::readRealGraph(const std::string& folderName){
         std::getline(ss, distance);
 
         graph->addBidirectionalEdge(
-            std::stoi(originID),
-            std::stoi(destinationID),
-            std::stod(distance)
+                std::stoi(originID),
+                std::stoi(destinationID),
+                std::stoi(distance)
         );
     }
 
     return 0;
 }
 
-int FileReader::readExtraGraph(const std::string& fileName){
+int FileReader::readExtraGraph(const std::string &fileName) {
 
     std::string path = "../data/extra-fully-connected-graphs/" + fileName + ".csv";
 

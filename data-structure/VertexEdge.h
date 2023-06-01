@@ -41,7 +41,7 @@ public:
      * @param vertex of Vertex type, by reference.
      * @return Bool type.
      */
-    bool operator<(Vertex & vertex) const;
+    bool operator<(Vertex &vertex) const;
 
     /** @brief Represents the id of the vertex.
      *
@@ -113,7 +113,7 @@ public:
      * @param w of double type.
      * @return Edge.
      */
-    Edge * addEdge(Vertex *dest, double w);
+    Edge *addEdge(Vertex *dest, double w);
 
     /** @brief Removes an outgoing edge from a vertex.
      *
@@ -173,7 +173,7 @@ public:
      *
      * @return Destination vertex.
      */
-    Vertex * getDest() const;
+    Vertex *getDest() const;
 
     /** @brief Gets the weight of the edge.
      *
@@ -185,7 +185,7 @@ public:
      *
      * @return Original vertex.
      */
-    Vertex * getOrig() const;
+    Vertex *getOrig() const;
 
     /** @brief Gets the flow of the edge.
      *
@@ -249,7 +249,7 @@ public:
 protected:
 
     //! @brief Holds the destination of the edge.
-    Vertex * dest;
+    Vertex *dest;
 
     //! @brief Holds the weight of the edge.
     double weight;

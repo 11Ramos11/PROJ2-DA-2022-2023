@@ -52,7 +52,7 @@ public:
      * @param id of int type.
      * @return Corresponding vertex.
      */
-    Vertex * findVertex(int id) const;
+    Vertex *findVertex(int id) const;
 
     /** @brief Adds a vertex with a given content to a graph.
      *
@@ -102,6 +102,14 @@ public:
      * @return Void.
      */
     void dfs(int source);
+
+    /** @brief Obtains the edge weight between two specific vertex.
+     *
+     * @param vertex1 of Vertex* type.
+     * @param vertex2 of Vertex* type.
+     * @return The edge weight.
+     */
+    double getEdgeWeightBetween(Vertex *vertex1, Vertex *vertex2);
 
     /** @brief Remove the vertex from the graph.
      *

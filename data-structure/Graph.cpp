@@ -6,6 +6,8 @@
 
 #include "Graph.h"
 
+
+Graph::Graph() {}
 template<class T1, class T2>
 std::size_t pair_hash::operator()(const std::pair<T1, T2> &p) const  {
     auto h1 = std::hash<T1>{}(p.first);
@@ -18,17 +20,16 @@ std::size_t pair_hash::operator()(const std::pair<T1, T2> &p) const  {
     return seed;
 }
 
-Graph::Graph(){}
 
-Graph::Graph(Graph *graph){
+Graph::Graph(Graph *graph) {
 
-    for (Vertex* vertex: graph->getVertexSet())
+    for (Vertex *vertex: graph->getVertexSet())
         this->addVertex(vertex->getId(), vertex->getCoordinates());
 
-    for (Vertex* vertex: graph->getVertexSet()){
-        for (Edge* edge: vertex->getAdj()){
-            Vertex* origin = findVertex(edge->getOrig()->getId());
-            Vertex* dest = findVertex(edge->getDest()->getId());
+    for (Vertex *vertex: graph->getVertexSet()) {
+        for (Edge *edge: vertex->getAdj()) {
+            Vertex *origin = findVertex(edge->getOrig()->getId());
+            Vertex *dest = findVertex(edge->getDest()->getId());
             origin->addEdge(dest, edge->getWeight());
         }
     }
@@ -38,12 +39,11 @@ int Graph::getNumVertex() const {
     return vertexSet.size();
 }
 
-std::vector<Vertex*> Graph::getVertexSet() const {
-
+std::vector<Vertex *> Graph::getVertexSet() const {
     return vertexSet;
 }
 
-Vertex * Graph::findVertex(int id) const {
+Vertex *Graph::findVertex(int id) const {
 
     auto it = indexMap.find(id);
 
@@ -55,7 +55,7 @@ Vertex * Graph::findVertex(int id) const {
     if (index < vertexSet.size() && vertexSet[index]->getId() == id)
         return vertexSet[index];
 
-    for (Vertex* vertex: vertexSet){
+    for (Vertex *vertex: vertexSet) {
         if (vertex->getId() == id)
             return vertex;
     }
@@ -63,12 +63,12 @@ Vertex * Graph::findVertex(int id) const {
     return nullptr;
 }
 
-void Graph::dfs(int source){
+void Graph::dfs(int source) {
 
-    Vertex* vertex = findVertex(source);
+    Vertex *vertex = findVertex(source);
     vertex->setVisited(true);
 
-    for (Edge* edge: vertex->getAdj()){
+    for (Edge *edge: vertex->getAdj()) {
         if (!edge->getDest()->isVisited())
             dfs(edge->getDest()->getId());
     }
@@ -106,10 +106,19 @@ bool Graph::addBidirectionalEdge(const int &source, const int &dest, double w) {
     return true;
 }
 
+double Graph::getEdgeWeightBetween(Vertex *vertex1, Vertex *vertex2) {
+    for (Edge *edge: vertex1->getAdj()) {
+        if (edge->getDest()->getId() == vertex2->getId()) {
+            return edge->getWeight();
+        }
+    }
+    return std::numeric_limits<double>::max();
+}
+
 void Graph::removeVertex(int id) {
     auto it = vertexSet.begin();
 
-    while (it != vertexSet.end()){
+    while (it != vertexSet.end()) {
 
         if ((*it)->getId() == id) {
             vertexSet.erase(it);

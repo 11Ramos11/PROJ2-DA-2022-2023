@@ -8,9 +8,9 @@
 
 /************************* Vertex  **************************/
 
-Vertex::Vertex(int id, std::shared_ptr<Coordinates> coordinates): id(id), coordinates(coordinates) {}
+Vertex::Vertex(int id, std::shared_ptr<Coordinates> coordinates) : id(id), coordinates(coordinates) {}
 
-Edge* Vertex::addEdge(Vertex *d, double w) {
+Edge *Vertex::addEdge(Vertex *d, double w) {
     auto newEdge = new Edge(this, d, w);
     adj.push_back(newEdge);
     d->incoming.push_back(newEdge);
@@ -29,22 +29,20 @@ bool Vertex::removeEdge(int destID) {
             while (it2 != dest->incoming.end()) {
                 if ((*it2)->getOrig()->getId() == id) {
                     it2 = dest->incoming.erase(it2);
-                }
-                else {
+                } else {
                     it2++;
                 }
             }
             delete edge;
             removedEdge = true;
-        }
-        else {
+        } else {
             it++;
         }
     }
     return removedEdge;
 }
 
-bool Vertex::operator<(Vertex & vertex) const {
+bool Vertex::operator<(Vertex &vertex) const {
     return this->dist < vertex.dist;
 }
 
@@ -56,7 +54,7 @@ std::shared_ptr<Coordinates> Vertex::getCoordinates() const {
     return this->coordinates;
 }
 
-std::vector<Edge*> Vertex::getAdj() const {
+std::vector<Edge *> Vertex::getAdj() const {
     return this->adj;
 }
 
@@ -91,10 +89,10 @@ void Vertex::setPath(Edge *path) {
 
 /********************** Edge  ****************************/
 
-Edge::Edge(Vertex *orig, Vertex *dest, double w):
-    orig(orig), dest(dest), weight(w) {}
+Edge::Edge(Vertex *orig, Vertex *dest, double w) :
+        orig(orig), dest(dest), weight(w) {}
 
-Vertex * Edge::getDest() const {
+Vertex *Edge::getDest() const {
     return this->dest;
 }
 
@@ -102,7 +100,7 @@ double Edge::getWeight() const {
     return this->weight;
 }
 
-Vertex * Edge::getOrig() const {
+Vertex *Edge::getOrig() const {
     return this->orig;
 }
 
@@ -122,7 +120,7 @@ double Edge::getMinResidual() {
     return maxResidual;
 }
 
-void Edge::setMinResidual(int minResidual){
+void Edge::setMinResidual(int minResidual) {
     this->maxResidual = minResidual;
 }
 
