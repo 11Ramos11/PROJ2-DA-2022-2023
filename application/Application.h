@@ -11,7 +11,6 @@
 #include <string>
 #include <stack>
 #include "../file-reader/FileReader.h"
-#include "../classes/timer/Timer.h"
 #include "../classes/backtraking/Backtracking.h"
 #include "../classes/heuristic/Heuristic.h"
 #include "../classes/analyst/Analyst.h"
@@ -29,9 +28,6 @@ class Application {
 
     //! @brief Initialization of the fileReader.
     FileReader fileReader = FileReader();
-
-    //! @brief Initialization of the timer.
-    Timer timer = Timer();
 
     //! @brief Initialization of the heuristic.
     Heuristic heuristic = Heuristic(graph);

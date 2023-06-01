@@ -22,8 +22,6 @@ add_executable(PROJ2_DA_2022_2023
         main.cpp
         data-structure/Coordinates.cpp
         data-structure/Coordinates.h
-        classes/timer/Timer.cpp
-        classes/timer/Timer.h
         classes/otherHeuristics/OtherHeuristics.cpp
         classes/otherHeuristics/OtherHeuristics.h
         classes/backtraking/Backtracking.cpp
