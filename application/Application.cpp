@@ -30,18 +30,18 @@ void Application::start() {
     }*/
 
     //timer.start();
-    fileReader.read(TOY_GRAPH, "shipping", graph);
+    /*fileReader.read(TOY_GRAPH, "shipping", graph);
     /*std::pair<double, std::vector<int>> tour = Heuristic(graph).dfs();
     std::cout << tour.first << std::endl;
     for(auto k : tour.second)
         std::cout << k << " ";*/
- 
+ /*
     backtraking = Backtracking(graph);
     auto res = backtraking.tspBacktracking();
     std::cout << res.first << std::endl;
     for(auto num: res.second){
         std::cout << num->getId() << " ";
-    }
+    }*/
 
     //std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
 
@@ -53,10 +53,10 @@ void Application::start() {
     getMenu();*/
 
 //    fileReader.read(EXTRA_GRAPH, "edges_900", graph);
-    /*
+
     state.push(WELCOME_MENU);
     getMenu();
-     */
+
 }
 
 void Application::welcomeMenu(){

@@ -61,7 +61,7 @@ void Backtracking::tspCicle(int index, double actualDistance, std::vector<int> &
 }
 
 Tour Backtracking::tspBacktracking() {
-
+    std::vector<Vertex *> bestCicle;
     double minDistance = std::numeric_limits<double>::max();
 
     std::vector<int> actualPath(graph->getVertexSet().size());
@@ -74,10 +74,10 @@ Tour Backtracking::tspBacktracking() {
         bestCicle.push_back(graph->findVertex(id));
     }
 
-    tourEdges.push_back(graph->getEdge(tourIds[tourIds.size() - 1], tourIds[0]));
+    /*tourEdges.push_back(graph->getEdge(tourIds[tourIds.size() - 1], tourIds[0]));
 
     Tour tour;
-    tour.setTour(tourEdges);
+    tour.setTour(tourEdges);*/
 
     return tour;
 }
