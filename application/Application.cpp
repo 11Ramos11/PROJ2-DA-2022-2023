@@ -9,7 +9,6 @@
 
 void Application::start() {
 
-
 //    fileReader.read(TOY_GRAPH, "shipping", graph);
     /*timer.start();
     fileReader.read(TOY_GRAPH, "stadiums", graph);*/
