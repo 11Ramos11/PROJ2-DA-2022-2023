@@ -8,9 +8,14 @@
 
 void Application::start() {
 
+
 //    fileReader.read(TOY_GRAPH, "shipping.csv", graph);
     /*timer.start();
     fileReader.read(TOY_GRAPH, "stadiums.csv", graph);*/
+
+//    fileReader.read(TOY_GRAPH, "shipping", graph);
+
+
 
 //    std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
 
@@ -23,28 +28,28 @@ void Application::start() {
         std::cout << "(" << source << ", " << destination << ", " << weight << ")-";
     }*/
 
-    /*std::pair<double, std::vector<int>> tour = heuristic.dfs();
+    /*timer.start();
+    fileReader.read(TOY_GRAPH, "stadiums", graph);
+    std::pair<double, std::vector<int>> tour = Heuristic(graph).dfs();
     std::cout << tour.first << std::endl;
     for(auto k : tour.second){
         std::cout << k << " ";
-    }*/
-
-
-    /*for (Vertex* vertex: graph->getVertexSet()){
-        std::cout << "Id: " << vertex->getId() << std::endl;
-    }
+ 
     backtraking = Backtracking(graph);
     auto res = backtraking.tspBacktracking();
     std::cout << res.first << std::endl;
+    for(auto num: res.second){
+        std::cout << num->getId() << " ";
+    }*/
 
     //std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
 
 //    fileReader.read(EXTRA_GRAPH, "edges_900.csv", graph);
-    std::cout << "---------------------------------------------------------------" << std::endl;*/
+    //std::cout << "---------------------------------------------------------------" << std::endl;
 
     //std::cout << res.first << std::endl;
-    state.push(WELCOME_MENU);
-    getMenu();
+    /*state.push(WELCOME_MENU);
+    getMenu();*/
 }
 
 void Application::welcomeMenu(){
