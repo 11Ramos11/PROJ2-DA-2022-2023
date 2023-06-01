@@ -10,14 +10,12 @@
 #include <string>
 
 class Coordinates {
-    double x;
-    double y;
+    double longitude;
+    double latitude;
 public:
-    Coordinates(double x, double y);
+    Coordinates(double longitude, double latitude);
 
-    double getX() const;
-
-    double getY() const;
+    double distanceTo(Coordinates coordinates);
 };
 
 

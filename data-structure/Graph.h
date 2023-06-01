@@ -82,7 +82,7 @@ public:
      */
     bool addBidirectionalEdge(const int &source, const int &dest, double w);
 
-    Edge* getEdge(int source, int dest) const;
+    Edge* getEdge(int source, int dest);
 
     /** @brief Represents the number of vertex of a graph.
      *
