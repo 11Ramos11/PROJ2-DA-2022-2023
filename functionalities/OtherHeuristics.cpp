@@ -90,16 +90,16 @@ int OtherHeuristics::nearestNeighbour(Tour &tour){
 }
 
 unsigned int calculateImprovements(unsigned int numEdges) {
-    unsigned int maxImprovements = 20;
+    unsigned int maxImprovements = 50;
 
     if (numEdges < 100) {
         return maxImprovements;
     } else if (numEdges < 500) {
-        double slope = -static_cast<double>(maxImprovements) / 400.0;
+        double slope = -static_cast<double>(maxImprovements) / 800.0;
         double improvements = maxImprovements + (numEdges - 100) * slope;
         return static_cast<unsigned int>(improvements);
     } else {
-        return maxImprovements / 5;
+        return maxImprovements / 10;
     }
 }
 
@@ -192,9 +192,10 @@ Tour OtherHeuristics::simulatedAnnealing(Tour &tour){
 
     unsigned int maxImprovements = calculateImprovements(tour.getEdges().size());
     unsigned int improvements = maxImprovements;
-    float temperature = 100;
 
     Tour finalTour = tour;
+
+    unsigned long z = 0;
 
     while (improvements--){
 
@@ -209,14 +210,16 @@ Tour OtherHeuristics::simulatedAnnealing(Tour &tour){
                 Tour newTour = twoOptSwap(finalTour,i,j);
                 unsigned int newCost = round(newTour.getCost() * 1000);
                 unsigned int oldCost = round(bestCost * 1000);
+
+                float temperature = 100 * pow(0.99, z);
+
                 if (shouldAccept(oldCost, newCost, temperature)){
                     finalTour = newTour;
                     bestCost = finalTour.getCost();
-                    if (tour.getEdges().size() < 100) {
+                    if (graph->getVertexSet().size() < 100)
                         improvements = maxImprovements;
-                    }
                 }
-                temperature *= 0.999;
+                z++;
             }
         }
     }

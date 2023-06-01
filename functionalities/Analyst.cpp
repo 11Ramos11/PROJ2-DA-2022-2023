@@ -157,14 +157,22 @@ void Analyst::analyzeApproximation(Tour tour) {
         std::cout << "Tour Approximation: " << std::endl;
         tour.print();
         std::cout << "Cost: " << tour.getCost() << std::endl;
+
+
         if (lowerBound != -1 && solution == -1) {
+            double diff = tour.getCost() - lowerBound;
+            if (diff < 0.001)
+                diff = 0;
             std::cout << "Lower Bound: " << lowerBound << std::endl;
-            std::cout << "Relative Error to Lower Bound: +" << (tour.getCost() - lowerBound) / lowerBound * 100 << "%" << std::endl;
-            std::cout << "Absolute Error to Lower Bound: +" << tour.getCost() - lowerBound << std::endl;
+            std::cout << "Relative Error to Lower Bound: +" << diff / lowerBound * 100 << "%" << std::endl;
+            std::cout << "Absolute Error to Lower Bound: +" << diff << std::endl;
         } else if (solution != -1){
+            double diff = tour.getCost() - solution;
+            if (diff < 0.000001)
+                diff = 0;
             std::cout << "Optimal Solution: " << solution << std::endl;
-            std::cout << "Relative Error to Optimal Solution: +" << (tour.getCost() - solution) / solution * 100 << "%" << std::endl;
-            std::cout << "Absolute Error to Optimal Solution: +" << tour.getCost() - solution << std::endl;
+            std::cout << "Relative Error to Optimal Solution: +" << diff / solution * 100 << "%" << std::endl;
+            std::cout << "Absolute Error to Optimal Solution: +" << diff << std::endl;
         }
     } else {
         std::cout << "Tour is indeterminable through this algorithm." << std::endl;
