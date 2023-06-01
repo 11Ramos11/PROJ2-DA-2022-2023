@@ -19,16 +19,15 @@ bool Backtracking::exitsPath(Vertex *vertex1, Vertex *vertex2) {
     return false;
 }
 
-void Backtracking::tspCicle(std::vector<Vertex *> &vertices, int size, int index, double actualDistance,
-                             std::vector<int> &actualPath, double &minDistance, std::vector<int> &tour) {
+void Backtracking::tspCicle(int index, double actualDistance, std::vector<int> &actualPath, double &minDistance, std::vector<int> &tour) {
     bool exitsPathBetweenVertex;
-    if (index == size) {
-        exitsPathBetweenVertex = exitsPath(vertices[graph->findVertex(actualPath[size - 1])->getId()],
-                                           vertices[graph->findVertex(actualPath[0])->getId()]);
+    if (index == graph->getNumVertex()) {
+        exitsPathBetweenVertex = exitsPath(graph->findVertex(actualPath[graph->getNumVertex() - 1]),
+                                           graph->findVertex(actualPath[0]));
         if (exitsPathBetweenVertex) {
             actualDistance += graph->getEdgeWeightBetween(
-                    vertices[graph->findVertex(actualPath[size - 1])->getId()],
-                    vertices[actualPath[0]]);
+                    graph->findVertex(actualPath[graph->getNumVertex() - 1]),
+                    graph->findVertex(actualPath[0]));
             if (actualDistance < minDistance) {
                 minDistance = actualDistance;
                 tour = actualPath;
@@ -37,26 +36,25 @@ void Backtracking::tspCicle(std::vector<Vertex *> &vertices, int size, int index
         }
     }
 
-    for (unsigned int v = 1; v < size; v++) {
-        exitsPathBetweenVertex = exitsPath(vertices[actualPath[index - 1]], vertices[v]);
+    for (unsigned int v = 1; v < graph->getNumVertex(); v++) {
+        exitsPathBetweenVertex = exitsPath(graph->findVertex(actualPath[index - 1]), graph->findVertex(v));
         if (exitsPathBetweenVertex)
             if (actualDistance + graph->getEdgeWeightBetween(
-                    vertices[graph->findVertex(actualPath[index - 1])->getId()],
-                    vertices[graph->findVertex(v)->getId()]) < minDistance) {
+                    graph->findVertex(actualPath[index - 1]),
+                    graph->findVertex(v)) < minDistance) {
                 bool visited = false;
                 for (unsigned int j = 1; j < index; j++) {
-                    if (actualPath[j] == v) {
+                    if (actualPath[j] == graph->findVertex(v)->getId()) {
                         visited = true;
                         break;
                     }
                 }
                 if (!visited) {
-                    actualPath[index] = v;
+                    actualPath[index] = graph->findVertex(v)->getId();
                     double dist = graph->getEdgeWeightBetween(
-                            vertices[graph->findVertex(actualPath[index - 1])->getId()],
-                            vertices[graph->findVertex(actualPath[index])->getId()]);
-                    tspCicle(vertices, size, index + 1,
-                              actualDistance + dist, actualPath, minDistance, tour);
+                            graph->findVertex(actualPath[index - 1]),
+                            graph->findVertex(actualPath[index]));
+                    tspCicle( index + 1,actualDistance + dist, actualPath, minDistance, tour);
                 }
             }
     }
@@ -66,18 +64,14 @@ Tour Backtracking::tspBacktracking() {
 
     double minDistance = std::numeric_limits<double>::max();
 
-    std::vector<Vertex *> vertices = graph->getVertexSet();
-    int size = vertices.size();
-    std::vector<int> actualPath(size);
-    actualPath[0] = vertices[0]->getId();
-    std::vector<int> tourIds(size);
+    std::vector<int> actualPath(graph->getVertexSet().size());
+    actualPath[0] = 0;
+    std::vector<int> tour(graph->getVertexSet().size());
 
-    tspCicle(vertices, size, 1, 0, actualPath, minDistance, tourIds);
+    tspCicle(1, 0, actualPath, minDistance, tour);
 
-    std::vector<Edge*> tourEdges;
-
-    for (int i = 0; i < tourIds.size() - 1; i++){
-        tourEdges.push_back(graph->getEdge(tourIds[i], tourIds[i+1]));
+    for (int id: tour) {
+        bestCicle.push_back(graph->findVertex(id));
     }
 
     tourEdges.push_back(graph->getEdge(tourIds[tourIds.size() - 1], tourIds[0]));
