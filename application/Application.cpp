@@ -321,11 +321,11 @@ void Application::functionalitiesMenu(){
     }
     while(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice =="9"));
 
-    choice = std::stoi(stringChoice);
+    choice = std::stoi(
+            stringChoice);
 
     switch(choice){
         case 1: {
-            backtraking = Backtracking(graph);
             auto res = backtraking.tspBacktracking();
             std::cout << res.first << std::endl;
             break;
