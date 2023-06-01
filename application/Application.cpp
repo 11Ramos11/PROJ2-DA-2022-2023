@@ -5,13 +5,14 @@
  */
 
 #include "Application.h"
+#include "../functionalities/OtherHeuristics.h"
 
 void Application::start() {
 
 
-//    fileReader.read(TOY_GRAPH, "shipping.csv", graph);
+//    fileReader.read(TOY_GRAPH, "shipping", graph);
     /*timer.start();
-    fileReader.read(TOY_GRAPH, "stadiums.csv", graph);*/
+    fileReader.read(TOY_GRAPH, "stadiums", graph);*/
 
 //    fileReader.read(TOY_GRAPH, "shipping", graph);
 
@@ -50,6 +51,12 @@ void Application::start() {
     //std::cout << res.first << std::endl;
     /*state.push(WELCOME_MENU);
     getMenu();*/
+
+//    fileReader.read(EXTRA_GRAPH, "edges_900", graph);
+    /*
+    state.push(WELCOME_MENU);
+    getMenu();
+     */
 }
 
 void Application::welcomeMenu(){
@@ -129,15 +136,18 @@ void Application::toyMenu(){
 
     switch(choice){
         case 1:
-            fileReader.read(TOY_GRAPH, "shipping.csv", graph);
+            fileReader.read(TOY_GRAPH, "shipping", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         case 2:
-            fileReader.read(TOY_GRAPH, "stadiums.csv", graph);
+            fileReader.read(TOY_GRAPH, "stadiums", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         case 3: {
-            fileReader.read(TOY_GRAPH, "tourism.csv", graph);
+            fileReader.read(TOY_GRAPH, "tourism", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
@@ -165,11 +175,11 @@ void Application::extraMenu(){
         std::cout << "6. Edges_300" << std::endl;
         std::cout << "7. Edges_400" << std::endl;
         std::cout << "8. Edges_500" << std::endl;
-        std::cout << "9. Edges_600" << std::endl;
-        std::cout << "10. Edges_700" << std::endl;
-        std::cout << "11. Edges_800" << std::endl;
-        std::cout << "12. Edges_900" << std::endl;
-        std::cout << "13. Go back" << std::endl;
+        std::cout << "10. Edges_600" << std::endl;
+        std::cout << "11. Edges_700" << std::endl;
+        std::cout << "12. Edges_800" << std::endl;
+        std::cout << "13. Edges_900" << std::endl;
+        std::cout << "9. Go back" << std::endl;
         std::cout << "0. Quit" << std::endl << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> stringChoice;
@@ -189,64 +199,76 @@ void Application::extraMenu(){
 
     switch(choice){
         case 1:
-            fileReader.read(EXTRA_GRAPH, "edges_25.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_25", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         case 2:
-            fileReader.read(EXTRA_GRAPH, "edges_50.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_50", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         case 3: {
-            fileReader.read(EXTRA_GRAPH, "edges_75.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_75", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 4: {
-            fileReader.read(EXTRA_GRAPH, "edges_100.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_100", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 5: {
-            fileReader.read(EXTRA_GRAPH, "edges_200.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_200", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 6: {
-            fileReader.read(EXTRA_GRAPH, "edges_300.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_300", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 7: {
-            fileReader.read(EXTRA_GRAPH, "edges_400.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_400", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 8: {
-            fileReader.read(EXTRA_GRAPH, "edges_500.csv", graph);
-            state.push(FUNC_MENU);
-            break;
-        }
-        case 9: {
-            fileReader.read(EXTRA_GRAPH, "edges_600.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_500", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 10: {
-            fileReader.read(EXTRA_GRAPH, "edges_700.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_600", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 11: {
-            fileReader.read(EXTRA_GRAPH, "edges_800.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_700", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 12: {
-            fileReader.read(EXTRA_GRAPH, "edges_900.csv", graph);
+            fileReader.read(EXTRA_GRAPH, "edges_800", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 13: {
+            fileReader.read(EXTRA_GRAPH, "edges_900", graph);
+            analyst = Analyst(graph);
+            state.push(FUNC_MENU);
+            break;
+        }
+        case 9: {
             state.pop();
             break;
         }
@@ -282,17 +304,138 @@ void Application::realMenu(){
     switch(choice){
         case 1: {
             fileReader.read(REAL_GRAPH, "graph1", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 2: {
             fileReader.read(REAL_GRAPH, "graph2", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
         case 3: {
             fileReader.read(REAL_GRAPH, "graph3", graph);
+            analyst = Analyst(graph);
             state.push(FUNC_MENU);
+            break;
+        }
+        case 9: {
+            state.pop();
+            break;
+        }
+        case 0:
+            exit(0);
+    }
+
+    getMenu();
+}
+
+void Application::functionalitiesMenu(){
+
+    do{
+        std::cout << std::endl << std::endl << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "    Routing Algorithm for Ocean Shipping and Urban Deliveries!" << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "1. Backtracking Algorithm" << std::endl;
+        std::cout << "2. Triangular Approximation Heuristic" << std::endl;
+        std::cout << "3. Other Heuristics" << std::endl;
+        std::cout << "8. Generate Lower Bound For Comparison" << std::endl;
+        std::cout << "9. Go Back" << std::endl;
+        std::cout << "0. Quit" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> stringChoice;
+        std::cin.ignore(1000,'\n');
+
+        if(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice == "8" || stringChoice =="9")){
+            std::cout << "Invalid option number!";
+        }
+    }
+    while(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice == "8" || stringChoice =="9"));
+
+    choice = std::stoi(
+            stringChoice);
+
+    switch(choice){
+        case 1: {
+            analyst.startTimer();
+            currentTour = Backtracking(graph).tspBacktracking();
+            analyst.analyzeSolution(currentTour);
+            break;
+        }
+        case 2: {
+            analyst.startTimer();
+            currentTour = Heuristic(graph).dfs();
+            analyst.analyzeApproximation(currentTour);
+            break;
+        }
+        case 3: {
+            this->currentTour = Tour();
+            state.push(OTHER_HEURISTICS_MENU);
+            break;
+        }
+        case 8: {
+            state.push(LOWER_BOUND_MENU);
+            break;
+        }
+        case 9: {
+            state.pop();
+            state.pop();
+            break;
+        }
+        case 0:
+            exit(0);
+    }
+    getMenu();
+}
+
+void Application::lowerBoundMenu(){
+
+    do{
+        std::cout << std::endl << std::endl << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "    Routing Algorithm for Ocean Shipping and Urban Deliveries!    " << std::endl;
+        std::cout << "------------------------------------------------------------------" << std::endl;
+        std::cout << "1. Generate Random 1-Tree LowerBound" << std::endl;
+        std::cout << "2. Generate Approximated 1-Tree LowerBound" << std::endl;
+        std::cout << "3. Generate Maximum 1-Tree LowerBound" << std::endl;
+        std::cout << "4. Remove 1-Tree LowerBound" << std::endl;
+        std::cout << "9. Go Back" << std::endl;
+        std::cout << "0. Quit" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> stringChoice;
+        std::cin.ignore(1000,'\n');
+
+        if(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice == "4" || stringChoice =="9")){
+            std::cout << "Invalid option number!";
+        }
+    }
+    while(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice == "4" || stringChoice =="9"));
+
+    choice = std::stoi(
+            stringChoice);
+
+    double lowerBound;
+
+    switch(choice){
+        case 1: {
+            lowerBound = analyst.randomLowerBound();
+            std::cout << "Lower Bound Generated: " << lowerBound << std::endl;
+            break;
+        }
+        case 2: {
+            lowerBound = analyst.approximatedLowerBound();
+            std::cout << "Lower Bound Generated: " << lowerBound << std::endl;
+            break;
+        }
+        case 3: {
+            lowerBound = analyst.maximumLowerBound();
+            std::cout << "Lower Bound Generated: " << lowerBound << std::endl;
+            break;
+        }
+        case 4: {
+            analyst.removeLowerBound();
             break;
         }
         case 9: {
@@ -305,41 +448,51 @@ void Application::realMenu(){
     getMenu();
 }
 
-void Application::functionalitiesMenu(){
+void Application::otherHeuristicsMenu(){
+
     do{
         std::cout << std::endl << std::endl << std::endl;
         std::cout << "------------------------------------------------------------------" << std::endl;
-        std::cout << "    Routing Algorithm for Ocean Shipping and Urban Deliveries!" << std::endl;
+        std::cout << "    Routing Algorithm for Ocean Shipping and Urban Deliveries!    " << std::endl;
         std::cout << "------------------------------------------------------------------" << std::endl;
-        std::cout << "1. Backtracking Algorithm" << std::endl;
-        std::cout << "2. Triangular Approximation Heuristic" << std::endl;
-        std::cout << "3. Other Heuristics" << std::endl;
+        std::cout << "1. Generate Nearest Neighbour Approximation" << std::endl;
+        if (currentTour.isSetted()){
+            std::cout << "2. Improve Approximation with 2-Opt" << std::endl;
+            std::cout << "3. Improve Approximation with Simulated Annealing" << std::endl;
+        }
         std::cout << "9. Go Back" << std::endl;
         std::cout << "0. Quit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> stringChoice;
         std::cin.ignore(1000,'\n');
 
-        if(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice =="9")){
+        if(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="9") &&
+           ((stringChoice == "2" || stringChoice == "3") && !currentTour.isSetted())){
             std::cout << "Invalid option number!";
         }
     }
-    while(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="2" || stringChoice == "3" || stringChoice =="9"));
+    while(!(stringChoice == "0" || stringChoice == "1" || stringChoice =="9") &&
+            ((stringChoice == "2" || stringChoice == "3") && !currentTour.isSetted()));
 
-    choice = std::stoi(
-            stringChoice);
+    choice = std::stoi(stringChoice);
 
     switch(choice){
         case 1: {
-            auto res = backtraking.tspBacktracking();
-            std::cout << res.first << std::endl;
+            analyst.startTimer();
+            OtherHeuristics(graph).nearestNeighbour(currentTour);
+            analyst.analyzeApproximation(currentTour);
             break;
         }
         case 2: {
-            heuristic.dfs();
+            analyst.startTimer();
+            currentTour = OtherHeuristics(graph).twoOpt(currentTour);
+            analyst.analyzeApproximation(currentTour);
             break;
         }
         case 3: {
+            analyst.startTimer();
+            currentTour = OtherHeuristics(graph).simulatedAnnealing(currentTour);
+            analyst.analyzeApproximation(currentTour);
             break;
         }
         case 9: {
@@ -354,7 +507,7 @@ void Application::functionalitiesMenu(){
 
 void Application::getMenu(){
     if(!state.empty()){
-        States states = state.top();
+        State states = state.top();
         switch(states){
             case WELCOME_MENU:
                 welcomeMenu();
@@ -373,6 +526,12 @@ void Application::getMenu(){
                 break;
             case FUNC_MENU:
                 functionalitiesMenu();
+                break;
+            case LOWER_BOUND_MENU:
+                lowerBoundMenu();
+                break;
+            case OTHER_HEURISTICS_MENU:
+                otherHeuristicsMenu();
                 break;
         }
     }

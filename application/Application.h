@@ -14,6 +14,7 @@
 #include "../classes/timer/Timer.h"
 #include "../classes/backtraking/Backtracking.h"
 #include "../classes/heuristic/Heuristic.h"
+#include "../functionalities/Analyst.h"
 
 
 /** @brief Initializes and manages all the components of the application.
@@ -31,18 +32,22 @@ class Application {
     //! @brief Initialization of the timer.
     Timer timer = Timer();
 
-    Backtracking backtraking = Backtracking(graph);
-
     Heuristic heuristic = Heuristic(graph);
 
+    Analyst analyst;
+
+    Tour currentTour;
+
     //! @brief Creates the initial menu options.
-    enum States {
+    enum State {
         WELCOME_MENU,
         READ_MENU,
         TOY_MENU,
         EXTRA_MENU,
         REAL_MENU,
-        FUNC_MENU
+        FUNC_MENU,
+        LOWER_BOUND_MENU,
+        OTHER_HEURISTICS_MENU,
     };
 
     //! @brief Initialization of the user choice.
@@ -52,7 +57,7 @@ class Application {
     std::string stringChoice;
 
     //! @brief Initialization of the stack that contains the application states.
-    std::stack<States> state;
+    std::stack<State> state;
 
 public:
 
@@ -93,6 +98,10 @@ public:
      * @return Void.
      */
     void initialMenu();
+
+    void lowerBoundMenu();
+
+    void otherHeuristicsMenu();
 };
 
 #endif //PROJ1_DA_2022_2023_APPLICATION_H

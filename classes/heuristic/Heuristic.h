@@ -8,6 +8,7 @@
 #define PROJ2_DA_2022_2023_HEURISTIC_H
 
 #include "Graph.h"
+#include "../../functionalities/Tour.h"
 
 /** @brief Heuristic class that contains the heuristic algorithmic approach to the TSP.
  *
@@ -69,7 +70,7 @@ public:
      * @return Pair object containing the total distance of the tour and
      *         a vector with the order of the vertices visited.
      */
-    std::pair<double, std::vector<int>> dfs();
+    Tour dfs();
 };
 
 

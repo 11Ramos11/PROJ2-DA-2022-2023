@@ -5,6 +5,9 @@
 #include "Analyst.h"
 
 #include <utility>
+#include <chrono>
+
+Analyst::Analyst() {}
 
 Analyst::Analyst(std::shared_ptr<Graph> graph) : graph(std::move(graph)) {}
 
@@ -71,12 +74,12 @@ double Analyst::oneTreeLB(unsigned int id){
     mst.push_back(lowestEdge1);
     mst.push_back(lowestEdge2);
 
-    double lowerBound = 0;
+    double finalLowerBound = 0;
 
     for (Edge* edge: mst)
-        lowerBound += edge->getWeight();
+        finalLowerBound += edge->getWeight();
 
-    return lowerBound;
+    return finalLowerBound;
 }
 
 double Analyst::randomLowerBound(){
@@ -86,10 +89,33 @@ double Analyst::randomLowerBound(){
 
     unsigned int randId = rand() % graph->getNumVertex();
 
-    return oneTreeLB(randId);
+    this->lowerBound = oneTreeLB(randId);
+
+    return this->lowerBound;
 }
 
-double::Analyst::MaximumLowerBound(){
+double::Analyst::approximatedLowerBound(){
+
+    if (graph->getNumVertex() == 0)
+        return 0;
+
+    double maxLowerBound = 0;
+
+    for (int i = 0; i < 100; i += rand() % 10 + 1){
+
+        Vertex* vertex = graph->findVertex(i);
+        double oneTreeBound = oneTreeLB(vertex->getId());
+
+        if (oneTreeBound > maxLowerBound)
+            maxLowerBound = oneTreeBound;
+    }
+
+    this->lowerBound = maxLowerBound;
+
+    return this->lowerBound;
+}
+
+double::Analyst::maximumLowerBound(){
 
     double maxLowerBound = 0;
 
@@ -100,13 +126,64 @@ double::Analyst::MaximumLowerBound(){
             maxLowerBound = oneTreeBound;
     }
 
-    return maxLowerBound;
+    this->lowerBound = maxLowerBound;
+
+    return this->lowerBound;
 }
 
-void Analyst::analyze(Tour tour, unsigned int time) {
+void Analyst::removeLowerBound() {
 
-    for (Vertex* vertex: graph->getVertexSet()){
+    this->lowerBound = -1;
+}
+
+void Analyst::startTimer() {
+
+    start = std::chrono::system_clock::now();
+}
+
+void Analyst::stopTimer() {
+
+    end = std::chrono::system_clock::now();
+}
+
+void Analyst::analyzeApproximation(Tour tour) {
+
+    this->stopTimer();
+    double microSeconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+    double time = microSeconds / 1000;
 
 
+    if (tour.isValid()) {
+        std::cout << "Tour Approximation: " << std::endl;
+        tour.print();
+        std::cout << "Cost: " << tour.getCost() << std::endl;
+        if (lowerBound != -1) {
+            std::cout << "Lower Bound: " << lowerBound << std::endl;
+            std::cout << "Relative Error: +" << (tour.getCost() - lowerBound) / lowerBound * 100 << "%" << std::endl;
+            std::cout << "Absolute Error: +" << tour.getCost() - lowerBound << std::endl;
+        }
+    } else {
+        std::cout << "Tour is indeterminable through this algorithm." << std::endl;
+    }
+    if (time > 1000){
+        std::cout << "Execution Time: " << time / 1000 << "s" << std::endl;
+    } else {
+        std::cout << "Execution Time: " << time << "ms" << std::endl;
+    }
+}
+
+void Analyst::analyzeSolution(Tour tour) {
+
+    this->stopTimer();
+    double microSeconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+    double time = microSeconds / 1000;
+
+    std::cout << "Tour Solution: " << std::endl;
+    tour.print();
+
+    if (time > 1000){
+        std::cout << "Execution Time: " << time / 1000 << "s" << std::endl;
+    } else {
+        std::cout << "Execution Time: " << time << "ms" << std::endl;
     }
 }

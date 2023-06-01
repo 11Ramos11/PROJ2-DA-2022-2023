@@ -5,6 +5,7 @@
  */
 
 #include "Heuristic.h"
+#include "../../functionalities/Tour.h"
 
 Heuristic::Heuristic(std::shared_ptr<Graph> &graph) : graph(graph) {}
 
@@ -80,8 +81,8 @@ void Heuristic::dfsAuxiliary(Vertex *v, std::vector<int> & tour) {
     }
 }
 
-std::pair<double, std::vector<int>> Heuristic::dfs(){
-    std::vector<int> tour;
+Tour Heuristic::dfs(){
+    std::vector<int> tourIds;
     std::pair<double, std::vector<int>> answer;
 
     Graph subgraph = buildMst();
@@ -92,20 +93,23 @@ std::pair<double, std::vector<int>> Heuristic::dfs(){
         v->setVisited(false);
     }
 
-    dfsAuxiliary(vertex, tour);
+    dfsAuxiliary(vertex, tourIds);
 
-    tour.push_back(0);
+    std::vector<Edge*> tourEdges;
 
-    for(int n: tour){
-        answer.second.push_back(n);
+    Edge* connectionToOrigin = graph->getEdge(tourIds[tourIds.size() - 1], tourIds[0]);
+    if (connectionToOrigin != nullptr){
+        tourEdges.reserve(tourIds.size());
+        for (int i = 0; i < tourIds.size() - 1; i++){
+            tourEdges.push_back(graph->getEdge(tourIds[i], tourIds[i+1]));
+        }
+        tourEdges.push_back(connectionToOrigin);
     }
 
-    for(int num = 0; num < tour.size()-1; num++) {
-        answer.first += graph->getEdgeWeightBetween(graph->findVertex(tour[num]),
-                                                    graph->findVertex(tour[num+1]));
-    }
+    Tour tour;
+    tour.setTour(tourEdges);
 
-    return answer;
+    return tour;
 }
 
 
