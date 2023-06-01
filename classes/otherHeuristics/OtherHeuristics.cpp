@@ -173,7 +173,7 @@ Tour OtherHeuristics::twoOpt(Tour &tour){
     return finalTour;
 }
 
-bool OtherHeuristics::shouldAccept(unsigned int oldCost, unsigned int newCost, float temperature){
+bool OtherHeuristics::shouldAccept(unsigned int oldCost, unsigned int newCost, double temperature){
 
     if (newCost < oldCost)
         return true;
@@ -197,6 +197,7 @@ Tour OtherHeuristics::simulatedAnnealing(Tour &tour){
 
     Tour finalTour = tour;
 
+    double temperature = 100;
     unsigned long z = 0;
 
     while (improvements--){
@@ -213,9 +214,9 @@ Tour OtherHeuristics::simulatedAnnealing(Tour &tour){
                 unsigned int newCost = round(newTour.getCost() * 1000);
                 unsigned int oldCost = round(bestCost * 1000);
 
-                float temperature = 100 * pow(0.75, z);
+                double currTemperature = temperature * pow(0.999, z);
 
-                if (shouldAccept(oldCost, newCost, temperature)){
+                if (shouldAccept(oldCost, newCost, currTemperature)){
                     finalTour = newTour;
                     bestCost = finalTour.getCost();
                     if (graph->getVertexSet().size() < 100)
