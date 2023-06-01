@@ -128,20 +128,20 @@ void Graph::removeVertex(int id) {
     }
 }
 
-Edge *Graph::getEdge(int source, int dest) const {
-
-//    Vertex* origin = findVertex(source);
-//
-//    for (Edge* edge: origin->getAdj())
-//        if (edge->getDest()->getId() == dest)
-//            return edge;
-//
-//    return nullptr;
+Edge *Graph::getEdge(int source, int dest) {
 
     auto it = edges->find(std::make_pair(source, dest));
 
-    if (it == edges->end())
-        return nullptr;
-
+    if (it == edges->end()) {
+        Vertex* s = findVertex(source);
+        Vertex* d = findVertex(dest);
+        if (s->getCoordinates() != nullptr && d->getCoordinates() != nullptr) {
+            double distance = s->getCoordinates()->distanceTo(*d->getCoordinates());
+            this->addBidirectionalEdge(source, dest, distance);
+            return edges->find(std::make_pair(source, dest))->second;
+        }
+        else
+            return nullptr;
+    }
     return it->second;
 }

@@ -86,8 +86,8 @@ public:
      * @param dest of int type.
      * @return A pointer for the edge
      */
-    Edge* getEdge(int source, int dest) const;
-
+    Edge* getEdge(int source, int dest);
+    
     /** @brief Represents the number of vertex of a graph.
      *
      * @return Number of vertex.

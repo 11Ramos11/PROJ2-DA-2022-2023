@@ -41,6 +41,12 @@ public:
      * @return double The y-coordinate.
      */
     double getY() const;
+    double longitude;
+    double latitude;
+public:
+    Coordinates(double longitude, double latitude);
+
+    double distanceTo(Coordinates coordinates);
 };
 
 
