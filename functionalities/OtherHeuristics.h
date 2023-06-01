@@ -7,10 +7,24 @@
 
 
 #include "Graph.h"
+#include "Tour.h"
 
 class OtherHeuristics {
 
-    void NearestNeighbour(std::shared_ptr<Graph> graph);
+    std::shared_ptr<Graph> graph;
+public:
+
+    OtherHeuristics(std::shared_ptr<Graph> graph);
+
+    int nearestNeighbour(Tour &tour);
+
+    Tour twoOpt(Tour &tour);
+
+    Tour twoOptSwap(Tour &tour, int i, int j);
+
+    bool shouldAccept(unsigned int oldCost, unsigned int newCost, float temperature);
+
+    Tour simulatedAnnealing(Tour &tour);
 };
 
 

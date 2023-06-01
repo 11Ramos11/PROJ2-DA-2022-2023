@@ -7,6 +7,10 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+
+#include <utility>
+#include <cmath>
+
 #include "FileReader.h"
 
 FileReader::FileReader() = default;
@@ -40,7 +44,7 @@ int FileReader::read(graphType type, const std::string &name, std::shared_ptr<Gr
 
 int FileReader::readToyGraph(const std::string &fileName) {
 
-    std::string path = "../data/toy-graphs/" + fileName;
+    std::string path = "../data/toy-graphs/" + fileName + ".csv";
 
     std::ifstream file(path);
 
@@ -63,7 +67,8 @@ int FileReader::readToyGraph(const std::string &fileName) {
 
         graph->addVertex(std::stoi(originID), nullptr);
         graph->addVertex(std::stoi(destinationID), nullptr);
-        graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), std::stod(distance));
+        double dist = std::stod(distance);
+        graph->addBidirectionalEdge(std::stoi(originID), std::stoi(destinationID), dist);
     }
     return 0;
 }
@@ -130,7 +135,7 @@ int FileReader::readRealGraph(const std::string &folderName) {
 
 int FileReader::readExtraGraph(const std::string &fileName) {
 
-    std::string path = "../data/extra-fully-connected-graphs/" + fileName;
+    std::string path = "../data/extra-fully-connected-graphs/" + fileName + ".csv";
 
     std::ifstream file(path);
 
@@ -140,8 +145,6 @@ int FileReader::readExtraGraph(const std::string &fileName) {
     }
 
     std::string line;
-
-    std::getline(file, line);
 
     std::string originID, destinationID, distance;
 

@@ -29,5 +29,8 @@ add_executable(PROJ2_DA_2022_2023
         classes/backtraking/Backtracking.cpp
         classes/backtraking/Backtracking.h
         classes/heuristic/Heuristic.cpp
-        classes/heuristic/Heuristic.h)
-
+        classes/heuristic/Heuristic.h
+        functionalities/Tour.cpp 
+        functionalities/Tour.h 
+        functionalities/Analyst.cpp 
+        functionalities/Analyst.h)

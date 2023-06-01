@@ -199,6 +199,12 @@ public:
      */
     double getMinResidual();
 
+    /** @brief Gets the reverse edge.
+     *
+     * @return Reverse edge.
+     */
+    Edge * getReverse() const;
+
     /** @brief Sets the reverse edge.
      *
      * @param reverse of Edge* type.
@@ -220,6 +226,26 @@ public:
      */
     void setMinResidual(int minResidual);
 
+    /** @brief Updates the used truth.
+     *
+     * @param used of bool type.
+     * @return Void.
+     */
+    void setUsed(bool used);
+
+    /** @brief Gets the used truth.
+     *
+     * @return Used.
+     */
+    bool isUsed() const;
+
+    /** @brief Operator overloading that prioritizes lower weight edges.
+     *
+     * @param e of Edge* type.
+     * @return Bool type.
+     */
+    bool operator<(Edge* e) const;
+
 protected:
 
     //! @brief Holds the destination of the edge.
@@ -239,6 +265,9 @@ protected:
 
     //! @brief Holds the flow of the edge.
     double flow;
+
+    //! @brief Holds whether or not the edge was used.
+    bool used = false;
 };
 
 #endif /* DA_TP_CLASSES_VERTEX_EDGE */
