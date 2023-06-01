@@ -34,21 +34,17 @@ void Backtracking::tspCicle(int index, double actualDistance, std::vector<int> &
 
     for (unsigned int v = 1; v < graph->getNumVertex(); v++) {
         exitsPathBetweenVertex = existsPath(actualPath[index - 1], v);
-        if (exitsPathBetweenVertex)
-            if (actualDistance + graph->getEdge(actualPath[index - 1], v)->getWeight() < minDistance){
-                bool visited = false;
-                for (unsigned int j = 1; j < index; j++) {
-                    if (actualPath[j] == graph->findVertex(v)->getId()) {
-                        visited = true;
-                        break;
-                    }
-                }
-                if (!visited) {
-                    actualPath[index] = graph->findVertex(v)->getId();
+        if (exitsPathBetweenVertex) {
+            if (actualDistance + graph->getEdge(actualPath[index - 1], v)->getWeight() < minDistance) {
+                if (!graph->findVertex(v)->isVisited()) {
+                    actualPath[index] = v;
                     double dist = graph->getEdge(actualPath[index - 1], actualPath[index])->getWeight();
-                    tspCicle( index + 1,actualDistance + dist, actualPath, minDistance, tour);
+                    graph->findVertex(v)->setVisited(true);
+                    tspCicle(index + 1, actualDistance + dist, actualPath, minDistance, tour);
+                    graph->findVertex(v)->setVisited(false);
                 }
             }
+        }
     }
 }
 
