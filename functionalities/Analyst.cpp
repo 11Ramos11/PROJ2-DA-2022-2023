@@ -152,17 +152,17 @@ void Analyst::analyze(Tour tour) {
     double microSeconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     double time = microSeconds / 1000;
 
-    std::cout << "Approximation: " << std::endl;
+    std::cout << "Tour Approximation: " << std::endl;
     tour.print();
-    std::cout << "Approximation Cost: " << tour.getCost() << std::endl;
+    std::cout << "Cost: " << tour.getCost() << std::endl;
     if (lowerBound != -1) {
-        std::cout << "Approximation Error: " << (tour.getCost() - lowerBound) / lowerBound * 100 << "%" << std::endl;
-        std::cout << "Approximation Absolute Error: " << tour.getCost() - lowerBound << std::endl;
-        std::cout << "Approximation Lower Bound: " << lowerBound << std::endl;
+        std::cout << "Lower Bound: " << lowerBound << std::endl;
+        std::cout << "Relative Error: +" << (tour.getCost() - lowerBound) / lowerBound * 100 << "%" << std::endl;
+        std::cout << "Absolute Error: +" << tour.getCost() - lowerBound << std::endl;
     }
     if (time > 1000){
-        std::cout << "Approximation Time: " << time / 1000 << "s" << std::endl;
+        std::cout << "Execution Time: " << time / 1000 << "s" << std::endl;
     } else {
-        std::cout << "Approximation Time: " << time << "ms" << std::endl;
+        std::cout << "Execution Time: " << time << "ms" << std::endl;
     }
 }

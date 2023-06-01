@@ -164,11 +164,11 @@ void Application::extraMenu(){
         std::cout << "6. Edges_300" << std::endl;
         std::cout << "7. Edges_400" << std::endl;
         std::cout << "8. Edges_500" << std::endl;
-        std::cout << "9. Edges_600" << std::endl;
-        std::cout << "10. Edges_700" << std::endl;
-        std::cout << "11. Edges_800" << std::endl;
-        std::cout << "12. Edges_900" << std::endl;
-        std::cout << "13. Go back" << std::endl;
+        std::cout << "10. Edges_600" << std::endl;
+        std::cout << "11. Edges_700" << std::endl;
+        std::cout << "12. Edges_800" << std::endl;
+        std::cout << "13. Edges_900" << std::endl;
+        std::cout << "9. Go back" << std::endl;
         std::cout << "0. Quit" << std::endl << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> stringChoice;
@@ -233,31 +233,31 @@ void Application::extraMenu(){
             state.push(FUNC_MENU);
             break;
         }
-        case 9: {
+        case 10: {
             fileReader.read(EXTRA_GRAPH, "edges_600", graph);
             analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
-        case 10: {
+        case 11: {
             fileReader.read(EXTRA_GRAPH, "edges_700", graph);
             analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
-        case 11: {
+        case 12: {
             fileReader.read(EXTRA_GRAPH, "edges_800", graph);
             analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
-        case 12: {
+        case 13: {
             fileReader.read(EXTRA_GRAPH, "edges_900", graph);
             analyst = Analyst(graph);
             state.push(FUNC_MENU);
             break;
         }
-        case 13: {
+        case 9: {
             state.pop();
             break;
         }
