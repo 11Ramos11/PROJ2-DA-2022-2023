@@ -8,9 +8,6 @@
 #include <iostream>
 #include <sstream>
 
-#include <utility>
-#include <cmath>
-
 #include "FileReader.h"
 
 FileReader::FileReader() = default;

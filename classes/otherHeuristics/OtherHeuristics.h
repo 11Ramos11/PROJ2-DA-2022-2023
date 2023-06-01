@@ -7,7 +7,7 @@
 
 
 #include "Graph.h"
-#include "Tour.h"
+#include "../tour/Tour.h"
 
 class OtherHeuristics {
 

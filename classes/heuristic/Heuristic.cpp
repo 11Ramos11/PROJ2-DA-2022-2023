@@ -5,7 +5,6 @@
  */
 
 #include "Heuristic.h"
-#include "../../functionalities/Tour.h"
 
 Heuristic::Heuristic(std::shared_ptr<Graph> &graph) : graph(graph) {}
 

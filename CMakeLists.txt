@@ -24,13 +24,13 @@ add_executable(PROJ2_DA_2022_2023
         data-structure/Coordinates.h
         classes/timer/Timer.cpp
         classes/timer/Timer.h
-        functionalities/OtherHeuristics.cpp
-        functionalities/OtherHeuristics.h
+        classes/otherHeuristics/OtherHeuristics.cpp
+        classes/otherHeuristics/OtherHeuristics.h
         classes/backtraking/Backtracking.cpp
         classes/backtraking/Backtracking.h
         classes/heuristic/Heuristic.cpp
         classes/heuristic/Heuristic.h
-        functionalities/Tour.cpp 
-        functionalities/Tour.h 
-        functionalities/Analyst.cpp 
-        functionalities/Analyst.h)
+        classes/tour/Tour.cpp
+        classes/tour/Tour.h
+        classes/analyst/Analyst.cpp
+        classes/analyst/Analyst.h)

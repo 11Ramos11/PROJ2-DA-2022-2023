@@ -6,7 +6,7 @@
 #define PROJ2_DA_2022_2023_ANALYST_H
 
 #include <chrono>
-#include "Tour.h"
+#include "../tour/Tour.h"
 #include "Graph.h"
 
 class Analyst {

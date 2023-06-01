@@ -5,57 +5,11 @@
  */
 
 #include "Application.h"
-#include "../functionalities/OtherHeuristics.h"
+#include "../classes/otherHeuristics/OtherHeuristics.h"
 
 void Application::start() {
-
-//    fileReader.read(TOY_GRAPH, "shipping", graph);
-    /*timer.start();
-    fileReader.read(TOY_GRAPH, "stadiums", graph);*/
-
-//    fileReader.read(TOY_GRAPH, "shipping", graph);
-
-
-
-//    std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
-
-    /*heuristic = Heuristic(graph);
-    std::vector<std::tuple<int, int, double>> res = heuristic.prim();
-    for(const auto& t : res){
-        int source = std::get<0>(t);
-        int destination = std::get<1>(t);
-        double weight = std::get<2>(t);
-        std::cout << "(" << source << ", " << destination << ", " << weight << ")-";
-    }*/
-
-    //timer.start();
-    /*fileReader.read(TOY_GRAPH, "shipping", graph);
-    /*std::pair<double, std::vector<int>> tour = Heuristic(graph).dfs();
-    std::cout << tour.first << std::endl;
-    for(auto k : tour.second)
-        std::cout << k << " ";*/
- /*
-    backtraking = Backtracking(graph);
-    auto res = backtraking.tspBacktracking();
-    std::cout << res.first << std::endl;
-    for(auto num: res.second){
-        std::cout << num->getId() << " ";
-    }*/
-
-    //std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
-
-//    fileReader.read(EXTRA_GRAPH, "edges_900.csv", graph);
-    //std::cout << "---------------------------------------------------------------" << std::endl;
-
-    //std::cout << res.first << std::endl;
-    /*state.push(WELCOME_MENU);
-    getMenu();*/
-
-//    fileReader.read(EXTRA_GRAPH, "edges_900", graph);
-
     state.push(WELCOME_MENU);
     getMenu();
-
 }
 
 void Application::welcomeMenu(){

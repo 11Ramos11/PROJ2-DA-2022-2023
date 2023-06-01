@@ -1,6 +1,8 @@
-//
-// Created by Ramos on 5/29/2023.
-//
+/** @file Coordinates.cpp
+ *  @brief Contains the Coordinates Class implementation.
+ *  @author -
+ *  @bug No known bugs.
+ */
 
 #include "Coordinates.h"
 

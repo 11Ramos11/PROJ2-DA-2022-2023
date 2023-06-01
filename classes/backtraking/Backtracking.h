@@ -8,7 +8,7 @@
 #define PROJ2_DA_2022_2023_BACKTRACKING_H
 
 #include "Graph.h"
-#include "../../functionalities/Tour.h"
+#include "../tour/Tour.h"
 
 /** @brief Backtracking class that contains the backtracking algorithmic approach to the TSP.
  *
@@ -34,7 +34,7 @@ public:
     * vertices in the graph.
     *
     * @param source ID of the source Vertex object.
-    * @param vertex2 ID to the destination Vertex object.
+    * @param dest ID to the destination Vertex object.
     * @return true if a path exists between source and dest, false otherwise.
     */
     bool existsPath(unsigned int source, unsigned int dest);
@@ -50,19 +50,17 @@ public:
     Tour tspBacktracking();
 
     /** @brief Finds a path that traverses all vertices in the graph once and returns to the starting vertex.
-    *
-    * This function implements a recursive approach to find the Travelling Salesperson Problem (TSP)
-    * cycle using backtracking. It updates the minimum distance and the tour if a better path is found.
-    *
-    * @param vertices A vector of Vertex pointers representing the vertices of the graph.
-    * @param size The size of the vertices vector.
-    * @param index The current index of the vertex in the vertices vector.
-    * @param actualDistance The distance of the current path.
-    * @param actualPath The current path being traversed.
-    * @param minDistance The minimum distance found so far.
-    * @param tour The best tour found so far.
-    * @return Void.
-    */
+     *
+     * This function implements a recursive approach to find the Travelling Salesperson Problem (TSP)
+     * cycle using backtracking. It updates the minimum distance and the tour if a better path is found.
+     *
+     * @param index of int type.
+     * @param actualDistance of double type.
+     * @param actualPath of std::vector<int> type, by reference.
+     * @param minDistance of double type, by reference.
+     * @param tour of std::vector<int> type, by reference.
+     * @return Void.
+     */
     void tspCicle(int index, double actualDistance,
                    std::vector<int> &actualPath, double &minDistance, std::vector<int> &tour);
 };

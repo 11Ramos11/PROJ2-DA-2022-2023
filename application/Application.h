@@ -14,7 +14,7 @@
 #include "../classes/timer/Timer.h"
 #include "../classes/backtraking/Backtracking.h"
 #include "../classes/heuristic/Heuristic.h"
-#include "../functionalities/Analyst.h"
+#include "../classes/analyst/Analyst.h"
 
 
 /** @brief Initializes and manages all the components of the application.
@@ -23,6 +23,7 @@
  * Manages the interaction between the user and the application.
  */
 class Application {
+
     //! @brief Initialization of the graph.
     std::shared_ptr<Graph> graph;
 
@@ -32,10 +33,13 @@ class Application {
     //! @brief Initialization of the timer.
     Timer timer = Timer();
 
+    //! @brief Initialization of the heuristic.
     Heuristic heuristic = Heuristic(graph);
 
+    //! @brief Initialization of the analyst.
     Analyst analyst;
 
+    //! @brief Initialization of the currentTour.
     Tour currentTour;
 
     //! @brief Creates the initial menu options.
@@ -79,28 +83,46 @@ public:
      */
     void welcomeMenu();
 
-    /** @brief Displays the read files menu.
+    /** @brief Displays the read files menu with the different categories of graphs.
      *
      * @return Void.
      */
     void readMenu();
 
-    void toyMenu();
-
-    void extraMenu();
-
-    void realMenu();
-
-    void functionalitiesMenu();
-
-    /** @brief Displays the initial menu.
+    /** @brief Displays the graphs of toy-graphs category.
      *
      * @return Void.
      */
-    void initialMenu();
+    void toyMenu();
 
+    /** @brief Displays the graphs of extra-fully-connected-graphs category.
+     *
+     * @return Void.
+     */
+    void extraMenu();
+
+    /** @brief Displays the graphs of real-world-graphs category.
+     *
+     * @return Void.
+     */
+    void realMenu();
+
+    /** @brief Displays the main algorithms.
+     *
+     * @return Void.
+     */
+    void functionalitiesMenu();
+
+    /** @brief Displays the various ways of comparison of the values.
+     *
+     * @return Void.
+     */
     void lowerBoundMenu();
 
+    /** @brief Displays the categories of others heuristics.
+     *
+     * @return Void.
+     */
     void otherHeuristicsMenu();
 };
 

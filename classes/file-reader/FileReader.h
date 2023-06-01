@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include "../../data-structure/Graph.h"
 
+//! @brief Initialization of the type of the graph.
 enum graphType {
     TOY_GRAPH,
     REAL_GRAPH,
@@ -22,6 +23,7 @@ enum graphType {
  */
 class FileReader {
 
+    //! @brief Initialization of the graph.
     std::shared_ptr<Graph> graph;
 
 public:
@@ -31,12 +33,40 @@ public:
      */
     FileReader();
 
+    /**@brief Reads a graph from a file.
+     *
+     * @param type Type of the graph to be read (TOY_GRAPH, REAL_GRAPH, or EXTRA_GRAPH).
+     * @param name Name of the file or directory.
+     * @param graph Shared pointer to the Graph object to be populated.
+     *
+     * @return 0 if the reading operation was successful, 1 otherwise.
+     */
     int read(graphType type, const std::string &name, std::shared_ptr<Graph> &graph);
 
+    /**@brief Reads a toy graph from a .csv file.
+     *
+     * @param fileName Name of the .csv file.
+     *
+     * @return 0 if the reading operation was successful, 1 otherwise.
+     */
     int readToyGraph(const std::string &fileName);
 
+    /**@brief Reads a real-world graph from a directory.
+     *
+     * The directory should contain nodes.csv and edges.csv files.
+     *
+     * @param folderName Name of the directory.
+     *
+     * @return 0 if the reading operation was successful, 1 otherwise.
+     */
     int readRealGraph(const std::string &folderName);
 
+    /**@brief Reads an extra fully connected graph from a .csv file.
+     *
+     * @param fileName Name of the .csv file.
+     *
+     * @return 0 if the reading operation was successful, 1 otherwise.
+     */
     int readExtraGraph(const std::string &fileName);
 };
 

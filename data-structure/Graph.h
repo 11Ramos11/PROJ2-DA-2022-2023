@@ -17,8 +17,6 @@
 
 #include "VertexEdge.h"
 
-// hash function for unordered_map<std::pair<int, int>, Edge*>
-
 /** @brief Hash function for unordered_map<std::pair<int, int>, Edge*>.
  *
  * @param p of std::pair<int, int> type.
@@ -82,6 +80,12 @@ public:
      */
     bool addBidirectionalEdge(const int &source, const int &dest, double w);
 
+    /** @brief Represents the edge between two vertex.
+     *
+     * @param source of int type.
+     * @param dest of int type.
+     * @return A pointer for the edge
+     */
     Edge* getEdge(int source, int dest) const;
 
     /** @brief Represents the number of vertex of a graph.
@@ -118,6 +122,7 @@ protected:
     //! @brief Maps the index of vertex, in the vertexSet, to its id.
     std::unordered_map<unsigned int, unsigned int> indexMap;
 
+    //! @brief The key of this map is a pair of unsigned integers and the value is a pointer to an Edge object.
     std::unordered_map<std::pair<unsigned int, unsigned int>, Edge*, pair_hash>* edges =
             new std::unordered_map<std::pair<unsigned int, unsigned int>, Edge*, pair_hash>();
 };

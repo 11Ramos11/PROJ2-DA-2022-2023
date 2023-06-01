@@ -8,7 +8,7 @@
 #define PROJ2_DA_2022_2023_HEURISTIC_H
 
 #include "Graph.h"
-#include "../../functionalities/Tour.h"
+#include "../tour/Tour.h"
 
 /** @brief Heuristic class that contains the heuristic algorithmic approach to the TSP.
  *
@@ -35,7 +35,6 @@ public:
      * represents an edge and contains the IDs of the source vertex,
      * destination vertex, and the weight of the edge.
      *
-     *
      * @return Vector of tuples representing the edges in the MST.
      */
     std::vector<std::tuple<int, int, double>> prim();
@@ -60,7 +59,7 @@ public:
      * @param tour Vector of vertex IDs, representing the order of visitation.
      * @return Void.
      */
-    void dfsAuxiliary(Vertex *v, std::vector<int> & res);
+    void dfsAuxiliary(Vertex *v, std::vector<int> & tour);
 
     /** @brief Implements a Depth-First Search (DFS) on the MST.
      *

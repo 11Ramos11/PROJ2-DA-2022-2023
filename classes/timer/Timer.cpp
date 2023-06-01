@@ -1,6 +1,8 @@
-//
-// Created by Ramos on 5/29/2023.
-//
+/** @file Timer.cpp
+ *  @brief Contains the Timer Class implementation.
+ *  @author -
+ *  @bug No known bugs.
+ */
 
 #include <ctime>
 #include "Timer.h"
