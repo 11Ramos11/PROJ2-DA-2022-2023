@@ -10,11 +10,10 @@
 
 Backtracking::Backtracking(std::shared_ptr<Graph> &graph) : graph(graph) {}
 
-bool Backtracking::exitsPath(Vertex *vertex1, Vertex *vertex2) {
-    for (Edge *edge: vertex1->getAdj()) {
-        if (edge->getDest()->getId() == vertex2->getId()) {
-            return true;
-        }
+bool Backtracking::existsPath(unsigned int source, unsigned int dest) {
+
+    if (graph->getEdge(source, dest) != nullptr) {
+        return true;
     }
     return false;
 }
@@ -22,12 +21,9 @@ bool Backtracking::exitsPath(Vertex *vertex1, Vertex *vertex2) {
 void Backtracking::tspCicle(int index, double actualDistance, std::vector<int> &actualPath, double &minDistance, std::vector<int> &tour) {
     bool exitsPathBetweenVertex;
     if (index == graph->getNumVertex()) {
-        exitsPathBetweenVertex = exitsPath(graph->findVertex(actualPath[graph->getNumVertex() - 1]),
-                                           graph->findVertex(actualPath[0]));
+        exitsPathBetweenVertex = existsPath(actualPath[graph->getNumVertex() - 1],actualPath[0]);
         if (exitsPathBetweenVertex) {
-            actualDistance += graph->getEdgeWeightBetween(
-                    graph->findVertex(actualPath[graph->getNumVertex() - 1]),
-                    graph->findVertex(actualPath[0]));
+            actualDistance += graph->getEdge(actualPath[graph->getNumVertex() - 1], actualPath[0])->getWeight();
             if (actualDistance < minDistance) {
                 minDistance = actualDistance;
                 tour = actualPath;
@@ -37,11 +33,9 @@ void Backtracking::tspCicle(int index, double actualDistance, std::vector<int> &
     }
 
     for (unsigned int v = 1; v < graph->getNumVertex(); v++) {
-        exitsPathBetweenVertex = exitsPath(graph->findVertex(actualPath[index - 1]), graph->findVertex(v));
+        exitsPathBetweenVertex = existsPath(actualPath[index - 1], v);
         if (exitsPathBetweenVertex)
-            if (actualDistance + graph->getEdgeWeightBetween(
-                    graph->findVertex(actualPath[index - 1]),
-                    graph->findVertex(v)) < minDistance) {
+            if (actualDistance + graph->getEdge(actualPath[index - 1], v)->getWeight() < minDistance){
                 bool visited = false;
                 for (unsigned int j = 1; j < index; j++) {
                     if (actualPath[j] == graph->findVertex(v)->getId()) {
@@ -51,9 +45,7 @@ void Backtracking::tspCicle(int index, double actualDistance, std::vector<int> &
                 }
                 if (!visited) {
                     actualPath[index] = graph->findVertex(v)->getId();
-                    double dist = graph->getEdgeWeightBetween(
-                            graph->findVertex(actualPath[index - 1]),
-                            graph->findVertex(actualPath[index]));
+                    double dist = graph->getEdge(actualPath[index - 1], actualPath[index])->getWeight();
                     tspCicle( index + 1,actualDistance + dist, actualPath, minDistance, tour);
                 }
             }
@@ -66,18 +58,20 @@ Tour Backtracking::tspBacktracking() {
 
     std::vector<int> actualPath(graph->getVertexSet().size());
     actualPath[0] = 0;
-    std::vector<int> tour(graph->getVertexSet().size());
+    std::vector<int> tourIds(graph->getVertexSet().size());
 
-    tspCicle(1, 0, actualPath, minDistance, tour);
+    tspCicle(1, 0, actualPath, minDistance, tourIds);
 
-    for (int id: tour) {
-        bestCicle.push_back(graph->findVertex(id));
+    std::vector<Edge *> tourEdges;
+
+    for (int i = 0; i < tourIds.size() - 1; i++) {
+
+        tourEdges.push_back(graph->getEdge(tourIds[i], tourIds[i + 1]));
     }
-
-    /*tourEdges.push_back(graph->getEdge(tourIds[tourIds.size() - 1], tourIds[0]));
+    tourEdges.push_back(graph->getEdge(tourIds[tourIds.size() - 1], tourIds[0]));
 
     Tour tour;
-    tour.setTour(tourEdges);*/
+    tour.setTour(tourEdges);
 
     return tour;
 }

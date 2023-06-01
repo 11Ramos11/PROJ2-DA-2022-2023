@@ -6,20 +6,19 @@
 
 #include "Graph.h"
 
-
-Graph::Graph() {}
-template<class T1, class T2>
-std::size_t pair_hash::operator()(const std::pair<T1, T2> &p) const  {
-    auto h1 = std::hash<T1>{}(p.first);
-    auto h2 = std::hash<T2>{}(p.second);
-
-    std::size_t seed = 0;
-    seed ^= h1 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-    seed ^= h2 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-
-    return seed;
+template<typename T>
+void hash_combine(std::size_t& seed, const T& v) {
+    seed ^= std::hash<T>{}(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 }
 
+template<class T1, class T2>
+std::size_t pair_hash::operator()(const std::pair<T1, T2>& p) const {
+    std::size_t retval = std::hash<T1>{}(p.first);
+    hash_combine(retval, p.second);
+    return retval;
+}
+
+Graph::Graph() {}
 
 Graph::Graph(Graph *graph) {
 
@@ -88,7 +87,7 @@ bool Graph::addEdge(const int &source, const int &dest, double w)  {
     if (v1 == nullptr || v2 == nullptr)
         return false;
     auto e1 = v1->addEdge(v2, w);
-    edges.emplace(std::make_pair(source, dest), e1);
+    edges->emplace(std::make_pair(source, dest), e1);
     return true;
 }
 
@@ -99,20 +98,11 @@ bool Graph::addBidirectionalEdge(const int &source, const int &dest, double w) {
         return false;
     auto e1 = v1->addEdge(v2, w);
     auto e2 = v2->addEdge(v1, w);
-    edges.emplace(std::make_pair(source, dest), e1);
-    edges.emplace(std::make_pair(dest, source), e2);
+    edges->emplace(std::make_pair(source, dest), e1);
+    edges->emplace(std::make_pair(dest, source), e2);
     e1->setReverse(e2);
     e2->setReverse(e1);
     return true;
-}
-
-double Graph::getEdgeWeightBetween(Vertex *vertex1, Vertex *vertex2) {
-    for (Edge *edge: vertex1->getAdj()) {
-        if (edge->getDest()->getId() == vertex2->getId()) {
-            return edge->getWeight();
-        }
-    }
-    return std::numeric_limits<double>::max();
 }
 
 void Graph::removeVertex(int id) {
@@ -140,9 +130,17 @@ void Graph::removeVertex(int id) {
 
 Edge *Graph::getEdge(int source, int dest) const {
 
-    auto it = edges.find(std::make_pair(source, dest));
+//    Vertex* origin = findVertex(source);
+//
+//    for (Edge* edge: origin->getAdj())
+//        if (edge->getDest()->getId() == dest)
+//            return edge;
+//
+//    return nullptr;
 
-    if (it == edges.end())
+    auto it = edges->find(std::make_pair(source, dest));
+
+    if (it == edges->end())
         return nullptr;
 
     return it->second;

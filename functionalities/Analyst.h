@@ -15,6 +15,8 @@ class Analyst {
 
     double lowerBound = -1;
 
+    double solution = -1;
+
     std::chrono::time_point<std::chrono::system_clock> start, end;
 
 public:

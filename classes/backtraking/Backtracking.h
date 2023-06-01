@@ -29,15 +29,15 @@ public:
     Backtracking(std::shared_ptr<Graph> &graph);
 
     /** @brief Check existence of a path between two vertices.
-     *
-     * This function checks whether there is a path between the two given
-     * vertices in the graph.
-     *
-     * @param vertex1 Pointer to the first Vertex object.
-     * @param vertex2 Pointer to the second Vertex object.
-     * @return true if a path exists between vertex1 and vertex2, false otherwise.
-     */
-    bool exitsPath(Vertex *vertex1, Vertex *vertex2);
+    *
+    * This function checks whether there is a path between the two given
+    * vertices in the graph.
+    *
+    * @param source ID of the source Vertex object.
+    * @param vertex2 ID to the destination Vertex object.
+    * @return true if a path exists between source and dest, false otherwise.
+    */
+    bool existsPath(unsigned int source, unsigned int dest);
 
     /** @brief Performs the TSP backtracking algorithm.
      *
