@@ -31,6 +31,8 @@ public:
     double getCost() const;
 
     void print();
+
+    bool isValid();
 };
 
 

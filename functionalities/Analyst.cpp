@@ -146,20 +146,41 @@ void Analyst::stopTimer() {
     end = std::chrono::system_clock::now();
 }
 
-void Analyst::analyze(Tour tour) {
+void Analyst::analyzeApproximation(Tour tour) {
 
     this->stopTimer();
     double microSeconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     double time = microSeconds / 1000;
 
-    std::cout << "Tour Approximation: " << std::endl;
-    tour.print();
-    std::cout << "Cost: " << tour.getCost() << std::endl;
-    if (lowerBound != -1) {
-        std::cout << "Lower Bound: " << lowerBound << std::endl;
-        std::cout << "Relative Error: +" << (tour.getCost() - lowerBound) / lowerBound * 100 << "%" << std::endl;
-        std::cout << "Absolute Error: +" << tour.getCost() - lowerBound << std::endl;
+
+    if (tour.isValid()) {
+        std::cout << "Tour Approximation: " << std::endl;
+        tour.print();
+        std::cout << "Cost: " << tour.getCost() << std::endl;
+        if (lowerBound != -1) {
+            std::cout << "Lower Bound: " << lowerBound << std::endl;
+            std::cout << "Relative Error: +" << (tour.getCost() - lowerBound) / lowerBound * 100 << "%" << std::endl;
+            std::cout << "Absolute Error: +" << tour.getCost() - lowerBound << std::endl;
+        }
+    } else {
+        std::cout << "Tour is indeterminable through this algorithm." << std::endl;
     }
+    if (time > 1000){
+        std::cout << "Execution Time: " << time / 1000 << "s" << std::endl;
+    } else {
+        std::cout << "Execution Time: " << time << "ms" << std::endl;
+    }
+}
+
+void Analyst::analyzeSolution(Tour tour) {
+
+    this->stopTimer();
+    double microSeconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+    double time = microSeconds / 1000;
+
+    std::cout << "Tour Solution: " << std::endl;
+    tour.print();
+
     if (time > 1000){
         std::cout << "Execution Time: " << time / 1000 << "s" << std::endl;
     } else {

@@ -37,7 +37,9 @@ public:
 
     void stopTimer();
 
-    void analyze(Tour tour);
+    void analyzeApproximation(Tour tour);
+
+    void analyzeSolution(Tour tour);
 };
 
 

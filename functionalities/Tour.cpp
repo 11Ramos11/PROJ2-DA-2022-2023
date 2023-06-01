@@ -47,3 +47,7 @@ double Tour::getCost() const {
 bool Tour::isSetted() const {
     return this->isSet;
 }
+
+bool Tour::isValid() {
+    return this->tourEdges.size() > 0;
+}

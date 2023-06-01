@@ -97,12 +97,14 @@ Tour Heuristic::dfs(){
 
     std::vector<Edge*> tourEdges;
 
-
-    tourEdges.reserve(tourIds.size());
-    for (int i = 0; i < tourIds.size() - 1; i++){
-        tourEdges.push_back(graph->getEdge(tourIds[i], tourIds[i+1]));
+    Edge* connectionToOrigin = graph->getEdge(tourIds[tourIds.size() - 1], tourIds[0]);
+    if (connectionToOrigin != nullptr){
+        tourEdges.reserve(tourIds.size());
+        for (int i = 0; i < tourIds.size() - 1; i++){
+            tourEdges.push_back(graph->getEdge(tourIds[i], tourIds[i+1]));
+        }
+        tourEdges.push_back(connectionToOrigin);
     }
-    tourEdges.push_back(graph->getEdge(tourIds[tourIds.size() - 1], tourIds[0]));
 
     Tour tour;
     tour.setTour(tourEdges);

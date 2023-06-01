@@ -44,8 +44,18 @@ void Application::start() {
     std::cout << "---------------------------------------------------------------" << std::endl;*/
 
     //std::cout << res.first << std::endl;
+
+    fileReader.read(TOY_GRAPH ,"shipping", graph);
+
+    std::cout << "---------------------------------------------------------------" << std::endl;
+
+    Tour tour = Backtracking(graph).tspBacktracking();
+
+    tour.print();
+    /*
     state.push(WELCOME_MENU);
     getMenu();
+     */
 }
 
 void Application::welcomeMenu(){
@@ -350,13 +360,13 @@ void Application::functionalitiesMenu(){
         case 1: {
             analyst.startTimer();
             currentTour = Backtracking(graph).tspBacktracking();
-            analyst.analyze(currentTour);
+            analyst.analyzeSolution(currentTour);
             break;
         }
         case 2: {
             analyst.startTimer();
             currentTour = Heuristic(graph).dfs();
-            analyst.analyze(currentTour);
+            analyst.analyzeApproximation(currentTour);
             break;
         }
         case 3: {
@@ -469,19 +479,19 @@ void Application::otherHeuristicsMenu(){
         case 1: {
             analyst.startTimer();
             OtherHeuristics(graph).nearestNeighbour(currentTour);
-            analyst.analyze(currentTour);
+            analyst.analyzeApproximation(currentTour);
             break;
         }
         case 2: {
             analyst.startTimer();
             currentTour = OtherHeuristics(graph).twoOpt(currentTour);
-            analyst.analyze(currentTour);
+            analyst.analyzeApproximation(currentTour);
             break;
         }
         case 3: {
             analyst.startTimer();
             currentTour = OtherHeuristics(graph).simulatedAnnealing(currentTour);
-            analyst.analyze(currentTour);
+            analyst.analyzeApproximation(currentTour);
             break;
         }
         case 9: {
