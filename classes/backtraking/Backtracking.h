@@ -62,7 +62,7 @@ public:
     * @param tour The best tour found so far.
     * @return Void.
     */
-    void tspCicle(std::vector<Vertex *> &vertices, int size, int index, double actualDistance,
+    void tspCicle(int index, double actualDistance,
                    std::vector<int> &actualPath, double &minDistance, std::vector<int> &tour);
 };
 

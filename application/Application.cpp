@@ -28,19 +28,19 @@ void Application::start() {
         std::cout << "(" << source << ", " << destination << ", " << weight << ")-";
     }*/
 
-    /*timer.start();
-    fileReader.read(TOY_GRAPH, "stadiums", graph);
-    std::pair<double, std::vector<int>> tour = Heuristic(graph).dfs();
+    //timer.start();
+    fileReader.read(TOY_GRAPH, "shipping", graph);
+    /*std::pair<double, std::vector<int>> tour = Heuristic(graph).dfs();
     std::cout << tour.first << std::endl;
-    for(auto k : tour.second){
-        std::cout << k << " ";
+    for(auto k : tour.second)
+        std::cout << k << " ";*/
  
     backtraking = Backtracking(graph);
     auto res = backtraking.tspBacktracking();
     std::cout << res.first << std::endl;
     for(auto num: res.second){
         std::cout << num->getId() << " ";
-    }*/
+    }
 
     //std::cout << "Time to read the graph: " << timer.stop() << " ms" << std::endl;
 
