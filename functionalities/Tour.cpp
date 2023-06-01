@@ -6,6 +6,7 @@
 
 void Tour::setTour(std::vector<Edge*> tourEdges){
 
+    this->isSet = true;
     this->tourEdges = tourEdges;
     this->tourVertexes.clear();
 
@@ -22,8 +23,6 @@ void Tour::setTour(std::vector<Edge*> tourEdges){
 
 void Tour::print() {
 
-    std::cout << "Tour: ";
-
     for (Vertex* vertex: tourVertexes) {
         std::cout << vertex->getId() << "->";
     }
@@ -31,8 +30,6 @@ void Tour::print() {
     std::cout << tourVertexes[0]->getId() << std::endl;
 
     std::cout << std::endl;
-
-    std::cout << "Cost: " << cost << std::endl;
 }
 
 std::vector<Vertex *> Tour::getVertexes() {
@@ -43,6 +40,10 @@ std::vector<Edge *> Tour::getEdges() {
     return tourEdges;
 }
 
-double Tour::getCost() {
-    return cost;
+double Tour::getCost() const {
+    return this->cost;
+}
+
+bool Tour::isSetted() const {
+    return this->isSet;
 }

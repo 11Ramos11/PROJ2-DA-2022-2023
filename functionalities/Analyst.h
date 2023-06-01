@@ -5,6 +5,7 @@
 #ifndef PROJ2_DA_2022_2023_ANALYST_H
 #define PROJ2_DA_2022_2023_ANALYST_H
 
+#include <chrono>
 #include "Tour.h"
 #include "Graph.h"
 
@@ -12,17 +13,31 @@ class Analyst {
 
     std::shared_ptr<Graph> graph;
 
+    double lowerBound = -1;
+
+    std::chrono::time_point<std::chrono::system_clock> start, end;
+
 public:
 
-    Analyst(std::shared_ptr<Graph> graph);
+    Analyst();
 
-    void analyze(Tour tour, unsigned int time);
+    Analyst(std::shared_ptr<Graph> graph);
 
     double oneTreeLB(unsigned int id);
 
     double randomLowerBound();
 
-    double MaximumLowerBound();
+    double maximumLowerBound();
+
+    double approximatedLowerBound();
+
+    void removeLowerBound();
+
+    void startTimer();
+
+    void stopTimer();
+
+    void analyze(Tour tour);
 };
 
 

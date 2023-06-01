@@ -5,6 +5,9 @@
 #include "Analyst.h"
 
 #include <utility>
+#include <chrono>
+
+Analyst::Analyst() {}
 
 Analyst::Analyst(std::shared_ptr<Graph> graph) : graph(std::move(graph)) {}
 
@@ -71,12 +74,12 @@ double Analyst::oneTreeLB(unsigned int id){
     mst.push_back(lowestEdge1);
     mst.push_back(lowestEdge2);
 
-    double lowerBound = 0;
+    double finalLowerBound = 0;
 
     for (Edge* edge: mst)
-        lowerBound += edge->getWeight();
+        finalLowerBound += edge->getWeight();
 
-    return lowerBound;
+    return finalLowerBound;
 }
 
 double Analyst::randomLowerBound(){
@@ -86,10 +89,33 @@ double Analyst::randomLowerBound(){
 
     unsigned int randId = rand() % graph->getNumVertex();
 
-    return oneTreeLB(randId);
+    this->lowerBound = oneTreeLB(randId);
+
+    return this->lowerBound;
 }
 
-double::Analyst::MaximumLowerBound(){
+double::Analyst::approximatedLowerBound(){
+
+    if (graph->getNumVertex() == 0)
+        return 0;
+
+    double maxLowerBound = 0;
+
+    for (int i = 0; i < 100; i += rand() % 10 + 1){
+
+        Vertex* vertex = graph->findVertex(i);
+        double oneTreeBound = oneTreeLB(vertex->getId());
+
+        if (oneTreeBound > maxLowerBound)
+            maxLowerBound = oneTreeBound;
+    }
+
+    this->lowerBound = maxLowerBound;
+
+    return this->lowerBound;
+}
+
+double::Analyst::maximumLowerBound(){
 
     double maxLowerBound = 0;
 
@@ -100,13 +126,38 @@ double::Analyst::MaximumLowerBound(){
             maxLowerBound = oneTreeBound;
     }
 
-    return maxLowerBound;
+    this->lowerBound = maxLowerBound;
+
+    return this->lowerBound;
 }
 
-void Analyst::analyze(Tour tour, unsigned int time) {
+void Analyst::removeLowerBound() {
 
-    for (Vertex* vertex: graph->getVertexSet()){
+    this->lowerBound = -1;
+}
 
+void Analyst::startTimer() {
 
+    start = std::chrono::system_clock::now();
+}
+
+void Analyst::stopTimer() {
+
+    end = std::chrono::system_clock::now();
+}
+
+void Analyst::analyze(Tour tour) {
+
+    double microSeconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+    double time = microSeconds / 1000;
+
+    std::cout << "Approximation: " << std::endl;
+    tour.print();
+    std::cout << "Approximation Cost: " << tour.getCost() << std::endl;
+    if (lowerBound != -1) {
+        std::cout << "Approximation Error: " << (tour.getCost() - lowerBound) / lowerBound * 100 << "%" << std::endl;
+        std::cout << "Approximation Absolute Error: " << tour.getCost() - lowerBound << std::endl;
+        std::cout << "Approximation Lower Bound: " << lowerBound << std::endl;
     }
+    std::cout << "Approximation Time: " << time << "ms" << std::endl;
 }

@@ -10,6 +10,8 @@
 
 class Tour {
 
+    bool isSet = false;
+
     std::vector<Edge*> tourEdges;
 
     std::vector<Vertex*> tourVertexes;
@@ -20,11 +22,13 @@ public:
 
     void setTour(std::vector<Edge*> tourEdges);
 
+    bool isSetted() const;
+
     std::vector<Vertex*> getVertexes();
 
     std::vector<Edge*> getEdges();
 
-    double getCost();
+    double getCost() const;
 
     void print();
 };
