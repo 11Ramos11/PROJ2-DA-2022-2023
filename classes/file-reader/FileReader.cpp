@@ -14,6 +14,8 @@ FileReader::FileReader() = default;
 
 int FileReader::read(graphType type, const std::string &name, std::shared_ptr<Graph> &graph) {
 
+    std::cout << "\nReading graph " << name << "..." << std::endl;
+
     this->graph.reset(new Graph());
 
     switch (type) {
@@ -125,6 +127,19 @@ int FileReader::readRealGraph(const std::string &folderName) {
                 std::stoi(destinationID),
                 std::stoi(distance)
         );
+    }
+
+    for (Vertex* vertex1: graph->getVertexSet()) {
+        for (Vertex* vertex2: graph->getVertexSet()){
+            if (vertex1 == vertex2)
+                continue;
+            if (vertex1->getCoordinates() == nullptr || vertex2->getCoordinates() == nullptr)
+               continue;
+           if (graph->getEdge(vertex1->getId(), vertex2->getId()) != nullptr)
+              continue;
+            double distance = vertex1->getCoordinates()->distanceTo(*vertex2->getCoordinates());
+            graph->addBidirectionalEdge(vertex1->getId(), vertex2->getId(), distance);
+        }
     }
 
     return 0;

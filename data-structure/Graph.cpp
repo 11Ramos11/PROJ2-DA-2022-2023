@@ -133,15 +133,7 @@ Edge *Graph::getEdge(int source, int dest) {
     auto it = edges->find(std::make_pair(source, dest));
 
     if (it == edges->end()) {
-        Vertex* s = findVertex(source);
-        Vertex* d = findVertex(dest);
-        if (s->getCoordinates() != nullptr && d->getCoordinates() != nullptr) {
-            double distance = s->getCoordinates()->distanceTo(*d->getCoordinates());
-            this->addBidirectionalEdge(source, dest, distance);
-            return edges->find(std::make_pair(source, dest))->second;
-        }
-        else
-            return nullptr;
+        return nullptr;
     }
     return it->second;
 }

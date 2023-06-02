@@ -30,6 +30,8 @@ public:
 
     /**@brief Runs the nearest neighbour heuristic.
      *
+     * Time Complexity: O(|V|^2)
+     *
      * @param tour The tour in which the determined approximation is stored.
      *
      * @return 0 if successful, 1 otherwise.
@@ -38,6 +40,8 @@ public:
 
     /**@brief Runs the 2-opt heuristic.
      *
+     * Time Complexity: O(|E|^3)
+     *
      * @param tour The tour to which the 2-opt heuristic is applied.
      *
      * @return Improved tour after the 2-opt heuristic.
@@ -45,6 +49,8 @@ public:
     Tour twoOpt(Tour &tour);
 
     /**@brief Swaps two edges in a tour.
+     *
+     * Time Complexity: O(|E|)
      *
      * @param tour The tour to which the swap is applied.
      * @param i The index of the first edge.
@@ -68,6 +74,8 @@ public:
     bool shouldAccept(unsigned int oldCost, unsigned int newCost, double temperature);
 
     /**@brief Runs the simulated annealing heuristic.
+     *
+     * Time Complexity: O(|E|^3)
      *
      * @param tour The tour to which the simulated annealing heuristic is applied.
      *

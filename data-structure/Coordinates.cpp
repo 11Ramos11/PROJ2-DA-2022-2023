@@ -25,7 +25,7 @@ double Coordinates::distanceTo(Coordinates coordinates) {
 
     double c = 2 * atan2(sqrt(a), sqrt(1 - a));
 
-    double d = 6373 * c;
+    double d = 6373 * c * 1000;
 
     return d;
 }
