@@ -66,6 +66,8 @@ public:
      * This function performs a DFS on the MST, starting from the vertex
      * with ID 0.
      *
+     * Complexity -> O(V)^2
+     *
      * @return Pair object containing the total distance of the tour and
      *         a vector with the order of the vertices visited.
      */
