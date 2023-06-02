@@ -44,7 +44,7 @@ public:
      * This function initiates and performs the backtracking algorithm
      * to solve the Travelling Salesperson Problem (TSP).
      *
-     * Complexity -> O(V!)
+     * Temporal Complexity -> O(V!)
      *
      * @return A pair where the first element is the minimum distance of the best cycle found,
      * and the second element is a vector of Vertex pointers that represents the best cycle.
